@@ -13,7 +13,7 @@ namespace ItemCustomizer
 {
 	public class CustomizerProjectile : GlobalProjectile
 	{
-		public List<int> newProjectiles = new List<int>();
+		public static List<int> newProjectiles = new List<int>();
 
 		public override void SetDefaults(Projectile projectile)
 		{
@@ -21,18 +21,20 @@ namespace ItemCustomizer
 		}
 
 		public override bool PreAI(Projectile projectile)
-		{
+		{/*
 			CustomizerProjInfo projInfo = projectile.GetModInfo<CustomizerProjInfo>(mod);
 
 			bool hook = Main.projHook[projectile.type];
 			bool pet = (projectile.type == ProjectileID.StardustGuardian) || (Main.projPet[projectile.type] && !projectile.minion && projectile.damage == 0 && !ProjectileID.Sets.LightPet[projectile.type]);
 			bool lightPet = !projectile.minion && projectile.damage == 0 && ProjectileID.Sets.LightPet[projectile.type];
-			
-			if(projInfo.parent && !(hook || pet || lightPet) && !projectile.npcProj && projectile.owner != 255 && Main.player[projectile.owner].itemAnimation > 0 && ((projectile.friendly || !projectile.hostile) || projectile.minion) && projInfo.shaderID < 0){
-				projInfo.shaderID = (mod as CustomizerMod).heldShaders[projectile.owner];
-			}
 
-			newProjectiles = new List<int>();
+			if(projInfo.parent && !(hook || pet || lightPet) && !projectile.npcProj && projectile.owner != 255 && Main.player[projectile.owner].itemAnimation > 0 && (projectile.friendly || projectile.minion) && !projectile.hostile && projInfo.shaderID < 0) {
+				projInfo.shaderID = (mod as CustomizerMod).heldShaders[projectile.owner];
+			} else if(projInfo.shaderID <= 0) {
+				projInfo.shaderID = 0;
+			}*/
+
+			newProjectiles.Clear();
 			return base.PreAI(projectile);
 		}
 
@@ -43,7 +45,7 @@ namespace ItemCustomizer
 
 		public override bool PreKill(Projectile projectile, int timeLeft)
 		{
-			newProjectiles = new List<int>();
+			newProjectiles.Clear();
 			return base.PreKill(projectile, timeLeft);
 		}
 
@@ -61,17 +63,16 @@ namespace ItemCustomizer
 					childInfo.shaderID = info.shaderID;
 					childInfo.parent = false;
 				}
-				newProjectiles = new List<int>();
+				newProjectiles.Clear();
 			}
 		}
-
+		/*
 		public override bool PreDraw(Projectile projectile, SpriteBatch spriteBatch, Color lightColor)
 		{
 			CustomizerProjInfo projInfo = projectile.GetModInfo<CustomizerProjInfo>(mod);
 
 			//Only affect projectiles with shaders
 			if(projInfo.shaderID > 0) {
-
 				spriteBatch.End();
 				spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Matrix.CreateScale(1f, 1f, 1f) * Matrix.CreateRotationZ(0f) * Matrix.CreateTranslation(new Vector3(0f, 0f, 0f)));
 
@@ -80,9 +81,8 @@ namespace ItemCustomizer
 				data.position = projectile.position - Main.screenPosition;
 				data.scale = new Vector2(projectile.scale, projectile.scale);
 				data.texture = Main.projectileTexture[projectile.type];
-				data.sourceRect = data.texture.Frame(1, Main.projFrames[projectile.type], 0, projectile.frame); 
+				data.sourceRect = data.texture.Frame(1, Main.projFrames[projectile.type], 0, projectile.frame);
 				GameShaders.Armor.ApplySecondary(projInfo.shaderID, Main.player[projectile.owner], data);
-				
 				//only apply custom drawing to projectiles without it
 				if(projectile.modProjectile == null || projectile.modProjectile.PreDraw(spriteBatch, lightColor)) {
 					DrawProj(projectile.whoAmI, projectile);
@@ -90,9 +90,10 @@ namespace ItemCustomizer
 				}
 				return false;
 			}
-			return true;
-		}
 
+			return true;
+		}*/
+		/*
 		//Resets the SpriteBatch after drawing projectile, to prepare for next projectile
 		public override void PostDraw(Projectile projectile, SpriteBatch spriteBatch, Color lightColor)
 		{
@@ -3938,5 +3939,5 @@ namespace ItemCustomizer
 				}
 			}
 		}
-	}
+	*/}
 }

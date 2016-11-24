@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using TerraUI;
 using TerraUI.Utilities;
+using ShaderLib.Shaders;
 
 namespace ItemCustomizer
 {
@@ -17,13 +18,15 @@ namespace ItemCustomizer
 		public int[] heldShaders = new int[Main.maxPlayers];
 		public bool guiOn;
 
+		public ShaderLib.ShaderLibMod shaderLibMod;
+
 		public CustomizerMod()
 		{
 			Properties = new ModProperties()
 			{
 				Autoload = true,
-				AutoloadGores = true,
-				AutoloadSounds = true
+				//AutoloadGores = true,
+				//AutoloadSounds = true
 			};
 		}
 
@@ -31,6 +34,25 @@ namespace ItemCustomizer
 		{
 			UIUtils.Mod = this;
 			UIUtils.Subdirectory = "TerraUI/";
+
+			//Applies the shader ID from ProjectileInfo to projectile through ShaderLib
+			ProjectileShader.hooks.Add(delegate(int shaderID, Projectile projectile) {
+				CustomizerProjInfo info = projectile.GetModInfo<CustomizerProjInfo>(this);
+				//Main.NewText(info.shaderID.ToString());
+				return info.shaderID;
+			});
+
+			//Applies the shader ID from ItemInfo to item through ShaderLib
+			ItemShader.preDrawInv.Add(delegate(int shaderID, Item item) {
+				CustomizerItemInfo info = item.GetModInfo<CustomizerItemInfo>(this);
+				return info.shaderID;
+			});
+			ItemShader.preDrawWorld.Add(delegate(int shaderID, Item item) {
+				CustomizerItemInfo info = item.GetModInfo<CustomizerItemInfo>(this);
+				return info.shaderID;
+			});
+
+			shaderLibMod = (ShaderLib.ShaderLibMod)ModLoader.GetMod("ShaderLib");
 		}
 
 		public override void AddRecipeGroups()

@@ -4,12 +4,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Terraria;
+using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using TerraUI;
 using TerraUI.Objects;
 using TerraUI.Panels;
 using TerraUI.Utilities;
+using ShaderLib;
+using ShaderLib.Dyes;
 
 namespace ItemCustomizer {
 	public class UIPlayer : ModPlayer {
@@ -136,7 +139,7 @@ namespace ItemCustomizer {
 			if(e.Button == MouseButtons.Left) {
 				if(itemSlot.Item != null && itemSlot.Item.active) {
 					CustomizerItemInfo info = itemSlot.Item.GetModInfo<CustomizerItemInfo>(mod);
-					if(nameBox.Text != ""){
+					if(nameBox.Text != "") {
 						itemSlot.Item.name = nameBox.Text;
 					} else {
 						Item dummy = new Item();
@@ -145,8 +148,27 @@ namespace ItemCustomizer {
 					}
 					info.itemName = nameBox.Text;
 
-					if(dyeSlot.Item != null && dyeSlot.Item.active)
-						info.shaderID = dyeSlot.Item.dye;
+					if(dyeSlot.Item != null && dyeSlot.Item.active){
+						//dye now stored as item ID (which is converted to shader ID)
+						if((mod as CustomizerMod).shaderLibMod.unLinkedItems.Contains(dyeSlot.Item.type)) {
+							MetaDyeInfo meta = dyeSlot.Item.GetModInfo<MetaDyeInfo>((mod as CustomizerMod).shaderLibMod);
+							info.shaderID = meta.fakeItemID;
+						} else {
+							info.shaderID = dyeSlot.Item.type;
+						}
+
+						/*
+						if(dyeSlot.Item.modItem != null) {
+							info.itemdata = new Tuple<string, string>(dyeSlot.Item.modItem.mod.Name, Main.itemName[dyeSlot.Item.type]);
+						} else {
+							info.itemdata = new Tuple<string, string>("Terraria", dyeSlot.Item.type.ToString());
+						}
+						info.shaderID = GameShaders.Armor.GetShaderIdFromItemId(dyeSlot.Item.type);
+						if(info.shaderID == 0) {
+							var meta = dyeSlot.Item.GetModInfo<MetaDyeInfo>(ModLoader.GetMod("ShaderLib"));
+							info.shaderID = GameShaders.Armor.GetShaderIdFromItemId(meta.fakeItemID);
+						}*/
+					}
 					else
 						info.shaderID = 0;
 					//Main.NewText(info.shaderID.ToString());
@@ -191,7 +213,7 @@ namespace ItemCustomizer {
 
 			Vector2 origin = new Vector2(rectangle2.Width / 2, rectangle2.Height / 2);
 
-			if(mod.GetGlobalItem("CustomizerItem").PreDrawInInventory(slot.Item, spriteBatch, new Vector2(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 2), rectangle2, Color.White, Color.White, origin, 1f)) {
+			if(ModLoader.GetMod("ShaderLib").GetGlobalItem("ItemShader").PreDrawInInventory(slot.Item, spriteBatch, new Vector2(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 2), rectangle2, Color.White, Color.White, origin, 1f)) {
 				spriteBatch.Draw(
 					Main.itemTexture[slot.Item.type],
 					new Vector2(Rectangle.X + Rectangle.Width / 2,
@@ -204,7 +226,7 @@ namespace ItemCustomizer {
 					SpriteEffects.None,
 					0f);
 			}
-			mod.GetGlobalItem("CustomizerItem").PostDrawInInventory(slot.Item, spriteBatch, new Vector2(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 2), rectangle2, Color.White, Color.White, origin, 1f);
+			ModLoader.GetMod("ShaderLib").GetGlobalItem("ItemShader").PostDrawInInventory(slot.Item, spriteBatch, new Vector2(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 2), rectangle2, Color.White, Color.White, origin, 1f);
 		}
 
 		public override void PreUpdate() {

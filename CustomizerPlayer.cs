@@ -10,7 +10,7 @@ namespace ItemCustomizer
 {
 	public class CustomizerPlayer : ModPlayer
 	{
-		
+		//public List<int> shotProjectiles = new List<int>();
 
 		public override void PreUpdate()
 		{
@@ -69,6 +69,28 @@ namespace ItemCustomizer
 		{
 			if(!Main.gameMenu) {
 				layers.Insert(layers.IndexOf(PlayerLayer.HeldItem) + 1, weaponDye);
+			}
+		}
+
+		public override bool PreItemCheck()
+		{
+			//CustomizerProjectile globalProj = (CustomizerProjectile)mod.GetGlobalProjectile("CustomizerProjectile");
+			//globalProj.newProjectiles = new List<int>();
+			CustomizerProjectile.newProjectiles.Clear();
+			return base.PreItemCheck();
+		}
+
+		public override void PostItemCheck()
+		{
+			//CustomizerProjectile globalProj = (CustomizerProjectile)mod.GetGlobalProjectile("CustomizerProjectile");
+			if((mod as CustomizerMod).heldShaders[player.whoAmI] > 0) {
+				foreach(int proj in CustomizerProjectile.newProjectiles /*globalProj.newProjectiles*/) {
+					CustomizerProjInfo shotInfo = Main.projectile[proj].GetModInfo<CustomizerProjInfo>(mod);
+					shotInfo.shaderID = (mod as CustomizerMod).heldShaders[player.whoAmI];
+					//Main.NewText("Applying shader " + shotInfo.shaderID + " to projectile " + proj);
+				}
+				CustomizerProjectile.newProjectiles.Clear();
+				//globalProj.newProjectiles = new List<int>();
 			}
 		}
 	}
