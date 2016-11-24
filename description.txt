@@ -1,0 +1,25 @@
+This mod allows you to rename and dye items.
+To begin, craft the Item Customizer at an anvil
+with 5 iron/lead and one Strange Plant.
+
+Use the item to access the GUI.
+Put an item in the left slot, and 
+a dye in the right if you want to dye the item.
+Type in the text box if you want to change the item's name.
+
+When you're done, click the "Apply" button, and remove the item(s).
+
+Enjoy!
+
+Latest Update (0.9):
+- Multiplayer support for dyed projectiles
+- Multiplayer GUI glitch fixes
+- Child projectiles are now properly shaded
+- NPC projectiles are now properly ignored
+- GUI no longer boots items on exit
+- GUI saves items held in its slots on world exit
+- GUI works with autopause
+- GUI now has an exit button
+- Can now press Enter to unfocus text box
+
+Full Changelog at Mod Homepage
