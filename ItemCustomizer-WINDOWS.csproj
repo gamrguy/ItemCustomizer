@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{656AFCF7-8B8A-4E4D-9F3B-5A7AE2681825}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>ItemCustomizer</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>ItemCustomizer</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+  <PropertyGroup>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="CustomTile.cs" />
+    <Compile Include="CustomizerMod.cs" />
+    <Compile Include="CustomizerPlayer.cs" />
+    <Compile Include="CustomizerProjectile.cs" />
+    <Compile Include="TerraUI\Enums\Contexts.cs" />
+    <Compile Include="TerraUI\Enums\MouseButtons.cs" />
+    <Compile Include="TerraUI\Enums\Sounds.cs" />
+    <Compile Include="TerraUI\Objects\UIButton.cs" />
+    <Compile Include="TerraUI\Objects\UIItemSlot.cs" />
+    <Compile Include="TerraUI\Objects\UILabel.cs" />
+    <Compile Include="TerraUI\Objects\UIObject.cs" />
+    <Compile Include="TerraUI\Objects\UIProgressBar.cs" />
+    <Compile Include="TerraUI\Objects\UITextBox.cs" />
+    <Compile Include="TerraUI\Panels\UIPanel.cs" />
+    <Compile Include="TerraUI\Utilities\BaseTextureDrawing.cs" />
+    <Compile Include="TerraUI\Utilities\Events.cs" />
+    <Compile Include="TerraUI\Utilities\KeyboardUtils.cs" />
+    <Compile Include="TerraUI\Utilities\MouseUtils.cs" />
+    <Compile Include="TerraUI\Utilities\UIColors.cs" />
+    <Compile Include="TerraUI\Utilities\UIUtils.cs" />
+    <Compile Include="Customizer\CustomizerItem.cs" />
+    <Compile Include="Customizer\ExampleWindow.cs" />
+    <Compile Include="Customizer\UIPlayer.cs" />
+    <Compile Include="Customizer\CustomItem.cs" />
+    <Compile Include="Customizer\CustomizerItemInfo.cs" />
+    <Compile Include="TerraUI\Objects\UIFakeItemSlot.cs" />
+    <Compile Include="Customizer\CustomizerProjInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TerraUI\Textures\1x1.png" />
+    <None Include="TerraUI\Textures\Background.png" />
+    <None Include="TerraUI\Textures\BackgroundSolid.png" />
+    <None Include="TerraUI\Textures\Corner.png" />
+    <None Include="TerraUI\Textures\CornerSolid.png" />
+    <None Include="TerraUI\Textures\Side.png" />
+    <None Include="TerraUI\Textures\SideSolid.png" />
+    <None Include="TerraUI\Textures\Buttons\Cross.png" />
+    <None Include="TerraUI\Textures\Buttons\Enter.png" />
+    <None Include="TerraUI\Textures\Buttons\Integrate.png" />
+    <None Include="build.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Customizer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\ModCompile\Microsoft.Xna.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Game">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\ModCompile\Microsoft.Xna.Framework.Game.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Graphics">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\ModCompile\Microsoft.Xna.Framework.Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Xact">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\ModCompile\Microsoft.Xna.Framework.Xact.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\System.Windows.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\System.dll</HintPath>
+    </Reference>
+    <Reference Include="Terraria">
+      <HintPath>..\..\..\..\..\..\Downloads\tModLoader-1.3.3\ModCompile\tModLoaderWindows.exe</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

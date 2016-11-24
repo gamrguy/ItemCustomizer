@@ -1,16 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Customizer/UIPlayer.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="CustomizerProjectile.cs">
     <Files>
       <File FileName="CustomTile.cs" Line="1" Column="1" />
-      <File FileName="CustomizerProjectile.cs" Line="1" Column="1" />
-      <File FileName="Customizer/CustomizerItem.cs" Line="1" Column="1" />
-      <File FileName="TerraUI/Objects/UIItemSlot.cs" Line="1" Column="1" />
-      <File FileName="Customizer/UIPlayer.cs" Line="200" Column="77" />
-      <File FileName="CustomizerMod.cs" Line="1" Column="1" />
-      <File FileName="TerraUI/Objects/UITextBox.cs" Line="92" Column="40" />
-      <File FileName="description.txt" Line="21" Column="29" />
-      <File FileName="TerraUI/Utilities/KeyboardUtils.cs" Line="30" Column="31" />
+      <File FileName="CustomizerProjectile.cs" Line="9" Column="15" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
