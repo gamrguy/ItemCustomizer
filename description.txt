@@ -11,6 +11,9 @@ When you're done, click the "Apply" button, and remove the item(s).
 
 Enjoy!
 
+Latest Patch (0.9.1):
+- Updated for tModLoader v0.8.3.5, after a long hiatus
+
 Latest Update (0.9):
 - Multiplayer support for dyed projectiles
 - Multiplayer GUI glitch fixes
