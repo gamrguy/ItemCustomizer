@@ -280,8 +280,8 @@ namespace ItemCustomizer {
 		//Old load function for compatibility reasons
 		public override void LoadLegacy(BinaryReader reader)
 		{
-			itemSlot.Item = ItemIO.Receive(reader, true, true);
-			dyeSlot.Item = ItemIO.Receive(reader, false, true);
+			ItemIO.LoadLegacy(itemSlot.Item, reader, true, true);
+			ItemIO.LoadLegacy(dyeSlot.Item, reader, false, true);
 		}
 	}
 }
