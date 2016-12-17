@@ -266,15 +266,15 @@ namespace ItemCustomizer {
 		public override TagCompound Save()
 		{
 			return new TagCompound{
-				{"ItemSlot", itemSlot.Item},
-				{"DyeSlot", dyeSlot.Item}
+				{"ItemSlot", ItemIO.Save(itemSlot.Item)},
+				{"DyeSlot", ItemIO.Save(dyeSlot.Item)}
 			};
 		}
 
 		public override void Load(TagCompound tag)
 		{
-			itemSlot.Item = tag.GetTag<Item>("ItemSlot");
-			dyeSlot.Item = tag.GetTag<Item>("DyeSlot");
+			itemSlot.Item = ItemIO.Load(tag.GetCompound("ItemSlot"));
+			dyeSlot.Item = ItemIO.Load(tag.GetCompound("DyeSlot"));
 		}
 
 		//Old load function for compatibility reasons
