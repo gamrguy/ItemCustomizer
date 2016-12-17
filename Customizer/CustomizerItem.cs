@@ -7,6 +7,7 @@ using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace ItemCustomizer
 {
@@ -63,20 +64,37 @@ namespace ItemCustomizer
 			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Matrix.CreateScale(1f, 1f, 1f) * Matrix.CreateRotationZ(0f) * Matrix.CreateTranslation(new Vector3(0f, 0f, 0f)));
 		}
 
-		public override bool NeedsCustomSaving(Item item)
+		public override bool NeedsSaving(Item item)
 		{
 			return item.GetModInfo<CustomizerItemInfo>(mod).customData;
 		}
 
-		public override void SaveCustomData(Item item, System.IO.BinaryWriter writer)
+		//New save function
+		public override TagCompound Save(Item item)
 		{
 			//Save custom item info
 			CustomizerItemInfo info = item.GetModInfo<CustomizerItemInfo>(mod);
-			writer.Write(info.itemName);
-			writer.Write(info.shaderID);
+
+			return new TagCompound{
+				{"Name", info.itemName},
+				{"ShaderID", info.shaderID}
+			};
 		}
 
-		public override void LoadCustomData(Item item, System.IO.BinaryReader reader)
+		//New load
+		public override void Load(Item item, TagCompound tag)
+		{
+			CustomizerItemInfo info = item.GetModInfo<CustomizerItemInfo>(mod);
+
+			info.itemName = tag.GetString("Name");
+			info.shaderID = tag.GetInt("ShaderID");
+
+			//Set the item's name correctly
+			if(info.itemName != "") item.name = info.itemName;
+		}
+
+		//Old load option, included for compatibility reasons
+		public override void LoadLegacy(Item item, System.IO.BinaryReader reader)
 		{
 			//Load custom item info
 			CustomizerItemInfo info = item.GetModInfo<CustomizerItemInfo>(mod);

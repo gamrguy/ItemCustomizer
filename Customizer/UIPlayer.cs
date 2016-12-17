@@ -263,17 +263,25 @@ namespace ItemCustomizer {
 		}
 
 		//Stops items from being deleted on world exit
-		public override void SaveCustomData(BinaryWriter writer)
+		public override TagCompound Save()
 		{
-			ItemIO.WriteItem(itemSlot.Item, writer, true, true);
-			ItemIO.WriteItem(dyeSlot.Item, writer, false, true);
+			return new TagCompound{
+				{"ItemSlot", itemSlot.Item},
+				{"DyeSlot", dyeSlot.Item}
+			};
 		}
 
-		//Loads items back in on world entry
-		public override void LoadCustomData(BinaryReader reader)
+		public override void Load(TagCompound tag)
 		{
-			itemSlot.Item = ItemIO.ReadItem(reader, true, true);
-			dyeSlot.Item = ItemIO.ReadItem(reader, false, true);
+			itemSlot.Item = tag.GetTag<Item>("ItemSlot");
+			dyeSlot.Item = tag.GetTag<Item>("DyeSlot");
+		}
+
+		//Old load function for compatibility reasons
+		public override void LoadLegacy(BinaryReader reader)
+		{
+			itemSlot.Item = ItemIO.Receive(reader, true, true);
+			dyeSlot.Item = ItemIO.Receive(reader, false, true);
 		}
 	}
 }
