@@ -15,7 +15,8 @@ namespace ItemCustomizer
 	{
 		//public List<int> shotProjectiles = new List<int>();
 
-		public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+		//Obsoleted code
+		/*public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
 			CustomizerItemInfo info = item.GetModInfo<CustomizerItemInfo>(mod);
 
@@ -39,8 +40,7 @@ namespace ItemCustomizer
 			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Matrix.CreateScale(1f, 1f, 1f) * Matrix.CreateRotationZ(0f) * Matrix.CreateTranslation(new Vector3(0f, 0f, 0f)));
 		}
 
-		//Obsoleted code
-		/*public override bool PreDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+		public override bool PreDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
 			CustomizerItemInfo info = item.GetModInfo<CustomizerItemInfo>(mod);
 
