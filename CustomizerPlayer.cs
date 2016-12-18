@@ -10,8 +10,6 @@ namespace ItemCustomizer
 {
 	public class CustomizerPlayer : ModPlayer
 	{
-		
-
 		public override void PreUpdate()
 		{
 			if(Main.myPlayer != player.whoAmI) {

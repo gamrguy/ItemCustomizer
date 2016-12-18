@@ -39,7 +39,8 @@ namespace ItemCustomizer
 			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Matrix.CreateScale(1f, 1f, 1f) * Matrix.CreateRotationZ(0f) * Matrix.CreateTranslation(new Vector3(0f, 0f, 0f)));
 		}
 
-		public override bool PreDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+		//Obsoleted code
+		/*public override bool PreDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
 			CustomizerItemInfo info = item.GetModInfo<CustomizerItemInfo>(mod);
 
@@ -62,7 +63,7 @@ namespace ItemCustomizer
 		{
 			spriteBatch.End();
 			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Matrix.CreateScale(1f, 1f, 1f) * Matrix.CreateRotationZ(0f) * Matrix.CreateTranslation(new Vector3(0f, 0f, 0f)));
-		}
+		}*/
 
 		public override bool NeedsSaving(Item item)
 		{
@@ -75,10 +76,16 @@ namespace ItemCustomizer
 			//Save custom item info
 			CustomizerItemInfo info = item.GetModInfo<CustomizerItemInfo>(mod);
 
-			return new TagCompound{
+			TagCompound data = new TagCompound{
 				{"Name", info.itemName},
-				{"ShaderID", info.shaderID}
+				{"ShaderID", info.shaderID},
 			};
+
+			if(info.modDye != null) {
+				data.SetTag("ModDye", info.modDye);
+			}
+
+			return data;
 		}
 
 		//New load
@@ -88,6 +95,18 @@ namespace ItemCustomizer
 
 			info.itemName = tag.GetString("Name");
 			info.shaderID = tag.GetInt("ShaderID");
+
+			//If this item has a modded dye, update shader ID accordingly
+			if(tag.HasTag("ModDye")) {
+				info.modDye = tag.GetTag<TagCompound>("ModDye");
+				Item modDye = ItemIO.Load(info.modDye);
+				if(modDye.dye > 0) {
+					info.shaderID = GameShaders.Armor.GetShaderIdFromItemId(modDye.type);
+				} else {
+					info.shaderID = 0;
+					item.toolTip2 += "\nShader currently unloaded!";
+				}
+			}
 
 			//Set the item's name correctly
 			if(info.itemName != "") item.name = info.itemName;

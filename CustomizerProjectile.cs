@@ -64,8 +64,9 @@ namespace ItemCustomizer
 				newProjectiles = new List<int>();
 			}
 		}
-		
-		public override bool PreDraw(Projectile projectile, SpriteBatch spriteBatch, Color lightColor)
+
+		//Obsolete code
+		/*public override bool PreDraw(Projectile projectile, SpriteBatch spriteBatch, Color lightColor)
 		{
 			CustomizerProjInfo projInfo = projectile.GetModInfo<CustomizerProjInfo>(mod);
 
@@ -3937,6 +3938,6 @@ namespace ItemCustomizer
 					}
 				}
 			}
-		}
+		}*/
 	}
 }

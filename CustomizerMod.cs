@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using TerraUI;
 using TerraUI.Utilities;
+using ShaderLib.Shaders;
 
 namespace ItemCustomizer
 {
@@ -31,6 +32,20 @@ namespace ItemCustomizer
 		{
 			UIUtils.Mod = this;
 			UIUtils.Subdirectory = "TerraUI/";
+
+			ItemShader.preDrawInv.Add(delegate(int shaderID, Item item) {
+				int shader = item.GetModInfo<CustomizerItemInfo>(TerraUI.Utilities.UIUtils.Mod).shaderID;
+				return shader != 0 ? shader : shaderID;
+			});
+			ItemShader.preDrawWorld.Add(delegate(int shaderID, Item item) {
+				int shader = item.GetModInfo<CustomizerItemInfo>(TerraUI.Utilities.UIUtils.Mod).shaderID;
+				return shader != 0 ? shader : shaderID;
+			});
+
+			ProjectileShader.hooks.Add(delegate(int shaderID, Projectile projectile) {
+				int shader = projectile.GetModInfo<CustomizerProjInfo>(TerraUI.Utilities.UIUtils.Mod).shaderID;
+				return shader != 0 ? shader : shaderID;
+			});
 		}
 
 		public override void AddRecipeGroups()
@@ -89,4 +104,3 @@ namespace ItemCustomizer
 		}
 	}
 }
-

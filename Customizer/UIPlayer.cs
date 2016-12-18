@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Terraria;
+using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using TerraUI;
@@ -145,10 +146,15 @@ namespace ItemCustomizer {
 					}
 					info.itemName = nameBox.Text;
 
-					if(dyeSlot.Item != null && dyeSlot.Item.active)
-						info.shaderID = dyeSlot.Item.dye;
-					else
+					if(dyeSlot.Item != null && dyeSlot.Item.active) {
+						info.shaderID = GameShaders.Armor.GetShaderIdFromItemId(dyeSlot.Item.type);
+						if(dyeSlot.Item.modItem != null) {
+							info.modDye = ItemIO.Save(dyeSlot.Item);
+						}
+					} else {
 						info.shaderID = 0;
+						info.modDye = null;
+					}
 					//Main.NewText(info.shaderID.ToString());
 				}
 

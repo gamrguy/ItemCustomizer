@@ -116,6 +116,9 @@
     <Reference Include="Terraria">
       <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.exe</HintPath>
     </Reference>
+    <Reference Include="ShaderLib">
+      <HintPath>..\ShaderLib\Mono.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomTile.cs" />
