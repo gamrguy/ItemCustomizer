@@ -135,7 +135,7 @@ namespace ItemCustomizer {
 
 		private bool button_Click(UIObject sender, MouseButtonEventArgs e) {
 			if(e.Button == MouseButtons.Left) {
-				if(itemSlot.Item != null && itemSlot.Item.active) {
+				if(itemSlot.Item != null && itemSlot.Item.active && !itemSlot.Item.IsAir) {
 					CustomizerItemInfo info = itemSlot.Item.GetModInfo<CustomizerItemInfo>(mod);
 					if(nameBox.Text != ""){
 						itemSlot.Item.name = nameBox.Text;
@@ -146,7 +146,7 @@ namespace ItemCustomizer {
 					}
 					info.itemName = nameBox.Text;
 
-					if(dyeSlot.Item != null && dyeSlot.Item.active) {
+					if(dyeSlot.Item != null && dyeSlot.Item.active && !dyeSlot.Item.IsAir) {
 						info.shaderID = GameShaders.Armor.GetShaderIdFromItemId(dyeSlot.Item.type);
 						if(dyeSlot.Item.modItem != null) {
 							info.modDye = ItemIO.Save(dyeSlot.Item);
@@ -166,11 +166,11 @@ namespace ItemCustomizer {
 
 		private bool itemSlot_Click(UIObject sender, MouseButtonEventArgs e){
 			if(e.Button == MouseButtons.Left) {
-				if(Main.mouseItem.type <= 0)
-					goto SKIP;
-				if(!(Main.mouseItem.maxStack == 1 || (Main.mouseItem.consumable && Main.mouseItem.createTile == -1 && Main.mouseItem.createWall == -1) || (Main.mouseItem.damage > 0 && Main.mouseItem.ammo == 0)))
-					return true;
-				SKIP:
+				//if(Main.mouseItem.type <= 0)
+				//	goto SKIP;
+				//if(!(Main.mouseItem.maxStack == 1 || (Main.mouseItem.consumable && Main.mouseItem.createTile == -1 && Main.mouseItem.createWall == -1) || (Main.mouseItem.damage > 0 && Main.mouseItem.ammo == 0)))
+				//	return true;
+				//SKIP:
 
 				if(Main.mouseItem.type > 0)
 					nameBox.Text = Main.mouseItem.name;
@@ -197,7 +197,7 @@ namespace ItemCustomizer {
 
 			Vector2 origin = new Vector2(rectangle2.Width / 2, rectangle2.Height / 2);
 
-			if(mod.GetGlobalItem("CustomizerItem").PreDrawInInventory(slot.Item, spriteBatch, new Vector2(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 2), rectangle2, Color.White, Color.White, origin, 1f)) {
+			if(ModLoader.GetMod("ShaderLib").GetGlobalItem("ItemShader").PreDrawInInventory(slot.Item, spriteBatch, new Vector2(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 2), rectangle2, Color.White, Color.White, origin, 1f)) {
 				spriteBatch.Draw(
 					Main.itemTexture[slot.Item.type],
 					new Vector2(Rectangle.X + Rectangle.Width / 2,
@@ -210,7 +210,7 @@ namespace ItemCustomizer {
 					SpriteEffects.None,
 					0f);
 			}
-			mod.GetGlobalItem("CustomizerItem").PostDrawInInventory(slot.Item, spriteBatch, new Vector2(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 2), rectangle2, Color.White, Color.White, origin, 1f);
+			ModLoader.GetMod("ShaderLib").GetGlobalItem("ItemShader").PostDrawInInventory(slot.Item, spriteBatch, new Vector2(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 2), rectangle2, Color.White, Color.White, origin, 1f);
 		}
 
 		public override void PreUpdate() {

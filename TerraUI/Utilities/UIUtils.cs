@@ -111,7 +111,7 @@ namespace TerraUI.Utilities {
                     return Main.inventoryBack7Texture;
                 case Contexts.ShopItem:
                     return Main.inventoryBack6Texture;
-                default:
+				default:
                     return Main.inventoryBackTexture;
             }
         }
