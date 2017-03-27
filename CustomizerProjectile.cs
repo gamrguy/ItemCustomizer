@@ -27,7 +27,8 @@ namespace ItemCustomizer
 			bool hook = Main.projHook[projectile.type];
 			bool pet = (projectile.type == ProjectileID.StardustGuardian) || (Main.projPet[projectile.type] && !projectile.minion && projectile.damage == 0 && !ProjectileID.Sets.LightPet[projectile.type]);
 			bool lightPet = !projectile.minion && projectile.damage == 0 && ProjectileID.Sets.LightPet[projectile.type];
-			
+
+			//Apply shader of the player's held item provided it meets all this criteria to make absolute certain a player fired it
 			if(projInfo.parent && !(hook || pet || lightPet) && !projectile.npcProj && projectile.owner != 255 && Main.player[projectile.owner].itemAnimation > 0 && ((projectile.friendly || !projectile.hostile) || projectile.minion) && projInfo.shaderID < 0){
 				projInfo.shaderID = (mod as CustomizerMod).heldShaders[projectile.owner];
 			}

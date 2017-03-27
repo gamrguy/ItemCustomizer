@@ -43,8 +43,8 @@ namespace ItemCustomizer {
 			y += height + margin;
 			applyButton = new UIButton(new Vector2(x, y), new Vector2(width, height), Main.fontItemStack, "Apply", parent: panel);
 			y += height + margin;
-			itemSlot = new TerraUI.Objects.UIItemSlot(new Vector2(x, y), parent: panel);
-			dyeSlot = new TerraUI.Objects.UIItemSlot(new Vector2(x + 56, y), context: Contexts.EquipDye, parent: panel);
+			itemSlot = new UIItemSlot(new Vector2(x, y), parent: panel);
+			dyeSlot = new UIItemSlot(new Vector2(x + 56, y), context: Contexts.EquipDye, parent: panel);
 
 			itemSlot.Click += itemSlot_Click;
 			itemSlot.DrawItem = itemSlot_DrawItem;
@@ -148,12 +148,8 @@ namespace ItemCustomizer {
 
 					if(dyeSlot.Item != null && dyeSlot.Item.active && !dyeSlot.Item.IsAir) {
 						info.shaderID = GameShaders.Armor.GetShaderIdFromItemId(dyeSlot.Item.type);
-						if(dyeSlot.Item.modItem != null) {
-							info.modDye = ItemIO.Save(dyeSlot.Item);
-						}
 					} else {
 						info.shaderID = 0;
-						info.modDye = null;
 					}
 					//Main.NewText(info.shaderID.ToString());
 				}
@@ -225,7 +221,7 @@ namespace ItemCustomizer {
 					player.GetItem(player.whoAmI, dyeSlot.Item);
 					dyeSlot.Item = new Item();
 				}*/
-				if(!itemSlot.Item.active) nameBox.Text = "";
+				if(!itemSlot.Item.active || itemSlot.Item.IsAir) nameBox.Text = "";
 				else nameBox.Text = itemSlot.Item.name;
 			}
 		}

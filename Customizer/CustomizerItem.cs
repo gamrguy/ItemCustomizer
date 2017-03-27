@@ -8,62 +8,13 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using ShaderLib.Shaders;
 
 namespace ItemCustomizer
 {
 	public class CustomizerItem : GlobalItem
 	{
 		//public List<int> shotProjectiles = new List<int>();
-
-		//Obsoleted code
-		/*public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-		{
-			CustomizerItemInfo info = item.GetModInfo<CustomizerItemInfo>(mod);
-
-			spriteBatch.End();
-			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Matrix.CreateScale(1f, 1f, 1f) * Matrix.CreateRotationZ(0f) * Matrix.CreateTranslation(new Vector3(0f, 0f, 0f)));
-
-			DrawData data = new DrawData();
-			data.origin = origin;
-			data.position = position - Main.screenPosition;
-			data.scale = new Vector2(scale, scale);
-			data.sourceRect = frame;
-			data.texture = Main.itemTexture[item.type];
-			GameShaders.Armor.ApplySecondary(info.shaderID, Main.player[item.owner], data);
-
-			return true;
-		}
-
-		public override void PostDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-		{
-			spriteBatch.End();
-			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Matrix.CreateScale(1f, 1f, 1f) * Matrix.CreateRotationZ(0f) * Matrix.CreateTranslation(new Vector3(0f, 0f, 0f)));
-		}
-
-		public override bool PreDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-		{
-			CustomizerItemInfo info = item.GetModInfo<CustomizerItemInfo>(mod);
-
-			spriteBatch.End();
-			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Matrix.CreateScale(1f, 1f, 1f) * Matrix.CreateRotationZ(0f) * Matrix.CreateTranslation(new Vector3(0f, 0f, 0f)));
-
-			DrawData data = new DrawData();
-			data.origin = item.Center;
-			data.position = item.position - Main.screenPosition;
-			data.scale = new Vector2(scale, scale);
-			//data.sourceRect = item.;
-			data.texture = Main.itemTexture[item.type];
-			data.rotation = rotation;
-			GameShaders.Armor.ApplySecondary(info.shaderID, Main.player[item.owner], data);
-
-			return true;
-		}
-
-		public override void PostDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
-		{
-			spriteBatch.End();
-			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Matrix.CreateScale(1f, 1f, 1f) * Matrix.CreateRotationZ(0f) * Matrix.CreateTranslation(new Vector3(0f, 0f, 0f)));
-		}*/
 
 		public override bool NeedsSaving(Item item)
 		{
@@ -78,12 +29,8 @@ namespace ItemCustomizer
 
 			TagCompound data = new TagCompound{
 				{"Name", info.itemName},
-				{"ShaderID", info.shaderID},
+				{"Shader", ShaderIO.SaveShader(info.shaderID)},
 			};
-
-			if(info.modDye != null) {
-				data.SetTag("ModDye", info.modDye);
-			}
 
 			return data;
 		}
@@ -93,20 +40,9 @@ namespace ItemCustomizer
 		{
 			CustomizerItemInfo info = item.GetModInfo<CustomizerItemInfo>(mod);
 
+			//TODO: Replace shader loading with ShaderLib implementation
 			info.itemName = tag.GetString("Name");
-			info.shaderID = tag.GetInt("ShaderID");
-
-			//If this item has a modded dye, update shader ID accordingly
-			if(tag.HasTag("ModDye")) {
-				info.modDye = tag.GetTag<TagCompound>("ModDye");
-				Item modDye = ItemIO.Load(info.modDye);
-				if(modDye.dye > 0) {
-					info.shaderID = GameShaders.Armor.GetShaderIdFromItemId(modDye.type);
-				} else {
-					info.shaderID = 0;
-					item.toolTip2 += "\nShader currently unloaded!";
-				}
-			}
+			info.shaderID = tag.ContainsKey("ShaderID") ? tag.GetInt("ShaderID") : ShaderIO.LoadShader(tag.GetCompound("Shader"));
 
 			//Set the item's name correctly
 			if(info.itemName != "") item.name = info.itemName;

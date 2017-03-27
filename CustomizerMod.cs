@@ -90,7 +90,7 @@ namespace ItemCustomizer
 		{
 			if(reader.ReadString() == pakCheckString) {
 				int heldShader = reader.ReadInt32();
-				
+
 				if(Main.netMode == 2) {
 					ModPacket pak = GetPacket();
 					pak.Write(pakCheckString);
@@ -101,6 +101,52 @@ namespace ItemCustomizer
 					heldShaders[reader.ReadInt32()] = heldShader;
 				}
 			}
+		}
+
+		//Weak referencing functions
+		public override object Call(params object[] args)
+		{
+			var badStuffException = new Exception("Something bad happened. Perhaps you're missing an argument?");
+			var notAnItemException = new Exception("Incorrect syntax. Try sending in an Item type next time.");
+			var notAProjException = new Exception("Incorrect syntax. Try sending in a Projectile type next time.");
+			var invalidCommandException = new Exception("Incorrect command. Are you spelling the command correctly?");
+
+			try {
+				//Allows easily getting the shader of items through weak referencing
+				if((string)args[0] == "GetItemShader") {
+					if((args[1] as Item) != null) {
+						return (args[1] as Item).GetModInfo<CustomizerItemInfo>(this);
+					}
+					return notAnItemException;
+
+				//Allows easily getting the shader of projectiles through weak referencing
+				} else if((string)args[0] == "GetProjShader") {
+					if((args[1] as Projectile) != null) {
+						return (args[1] as Projectile).GetModInfo<CustomizerProjInfo>(this).shaderID;
+					}
+					return notAProjException;
+				
+
+				//Allows easily setting the shader of items through weak referencing
+				} else if((string)args[0] == "SetItemShader") {
+					if((args[1] as Item) != null) {
+						(args[1] as Item).GetModInfo<CustomizerItemInfo>(this).shaderID = (int)args[2];
+						return true;
+					}
+					return notAnItemException;
+				
+				//Allows easily setting the shader of projectiles through weak referencing
+				} else if((string)args[0] == "SetProjShader") {
+					if((args[1] as Projectile) != null) {
+						(args[1] as Projectile).GetModInfo<CustomizerProjInfo>(this).shaderID = (int)args[2];
+					}
+					return notAProjException;
+				}
+			} catch(Exception e) {
+				return badStuffException;
+			}
+
+			return invalidCommandException;
 		}
 	}
 }

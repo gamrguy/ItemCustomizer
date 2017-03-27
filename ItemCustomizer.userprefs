@@ -1,26 +1,35 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Customizer/UIPlayer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CustomizerPlayer.cs">
     <Files>
-      <File FileName="CustomizerMod.cs" Line="1" Column="1" />
+      <File FileName="CustomizerMod.cs" Line="121" Column="1" />
       <File FileName="CustomizerPlayer.cs" Line="59" Column="49" />
-      <File FileName="Customizer/UIPlayer.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
+          <Node name="ArmorHairDye" expanded="True">
+            <Node name="ArmorHairDye" expanded="True" />
+          </Node>
           <Node name="ItemCustomizer" expanded="True">
             <Node name="ItemCustomizer" expanded="True">
               <Node name="References" expanded="True" />
-              <Node name="Customizer" expanded="True">
-                <Node name="UIPlayer.cs" selected="True" />
-              </Node>
+              <Node name="Customizer" expanded="True" />
+              <Node name="CustomizerPlayer.cs" selected="True" />
+            </Node>
+          </Node>
+          <Node />
+          <Node name="ShaderLib" expanded="True">
+            <Node name="ShaderLib" expanded="True">
+              <Node name="References" expanded="True" />
+              <Node name="Dyes" expanded="True" />
+              <Node name="Shaders" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
