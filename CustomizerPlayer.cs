@@ -17,19 +17,19 @@ namespace ItemCustomizer
 			}
 
 			Item held;
-			if(Main.mouseItem.type > 0) {
+			if(Main.mouseItem.active && !Main.mouseItem.IsAir && Main.mouseItem.type > 0) {
 				held = Main.mouseItem;
 			} else {
 				held = player.inventory[player.selectedItem];
 			}
-			if(!held.active && !held.IsAir) {
-				(mod as CustomizerMod).heldShaders[Main.myPlayer] = 0;
+			if(!held.active || held.IsAir) {
+				(mod as CustomizerMod).heldShaders[player.whoAmI] = 0;
 			} else {
 				CustomizerItemInfo info = held.GetModInfo<CustomizerItemInfo>(mod);
-				(mod as CustomizerMod).heldShaders[Main.myPlayer] = info.shaderID;
+				(mod as CustomizerMod).heldShaders[player.whoAmI] = info.shaderID;
 			}
 
-			if(Main.netMode == 1) {
+			if(Main.netMode == NetmodeID.MultiplayerClient) {
 				ModPacket pak = mod.GetPacket();
 				pak.Write(CustomizerMod.pakCheckString);
 				pak.Write((mod as CustomizerMod).heldShaders[Main.myPlayer]);
@@ -37,28 +37,29 @@ namespace ItemCustomizer
 			}
 		}
 
-		public PlayerLayer weaponDye = new PlayerLayer ("ItemCustomizer", "WeaponDye", delegate (PlayerDrawInfo drawInfo) {
+		/*public PlayerLayer weaponDye = new PlayerLayer("ItemCustomizer", "WeaponDye", delegate (PlayerDrawInfo drawInfo) {
 			Player player = drawInfo.drawPlayer;
-			Item heldItem = player.inventory [player.selectedItem];
+			Item heldItem = player.inventory[player.selectedItem];
 
 			//Don't cause crashes :-)
-			if (heldItem == null || !heldItem.active || heldItem.IsAir) return;
-			CustomizerItemInfo info = heldItem.GetModInfo<CustomizerItemInfo> (TerraUI.Utilities.UIUtils.Mod);
+			if(heldItem == null || !heldItem.active || heldItem.IsAir) return;
+			CustomizerItemInfo info = heldItem.GetModInfo<CustomizerItemInfo>(TerraUI.Utilities.UIUtils.Mod);
 			int index = Main.playerDrawData.Count - 1;
 
 			//Don't bother with items that aren't showing (e.g. Arkhalis)
-			if (heldItem.noUseGraphic) return;
+			if(heldItem.noUseGraphic) return;
 
 			//Prevents throwing a shader on torch flames (or any other flame texture)
-			if (heldItem.flame) {
+			if(heldItem.flame) {
 				index -= 1;
 			}
 
 			//Only use shader when player is using/holding an item
-			if (player.itemAnimation > 0 && !player.pulley && info.shaderID > 0) {
-				DrawData data = Main.playerDrawData [index];
+			if(player.itemAnimation > 0 && !player.pulley && info.shaderID > 0) {
+				Main.NewText("Applying shader " + info.shaderID + " for player " + player.name);
+				DrawData data = Main.playerDrawData[index];
 				data.shader = info.shaderID;
-				Main.playerDrawData [index] = data;
+				Main.playerDrawData[index] = data;
 			}
 		});
 
@@ -67,7 +68,7 @@ namespace ItemCustomizer
 			if (!Main.gameMenu) {
 				layers.Insert (layers.IndexOf (PlayerLayer.HeldItem) + 1, weaponDye);
 			}
-		}
+		}*/
 	}
 }
 

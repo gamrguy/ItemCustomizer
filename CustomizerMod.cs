@@ -7,7 +7,9 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using TerraUI;
 using TerraUI.Utilities;
+using ShaderLib;
 using ShaderLib.Shaders;
+using ShaderLib.Dyes;
 
 namespace ItemCustomizer
 {
@@ -33,17 +35,21 @@ namespace ItemCustomizer
 			UIUtils.Mod = this;
 			UIUtils.Subdirectory = "TerraUI/";
 
-			ItemShader.preDrawInv.Add(delegate(int shaderID, Item item) {
-				int shader = item.GetModInfo<CustomizerItemInfo>(TerraUI.Utilities.UIUtils.Mod).shaderID;
+			//Adding ShaderLib hooks
+			ShaderLibMod.AddItemShaderInventoryHook((shaderID, item) => {
+				int shader = item.GetModInfo<CustomizerItemInfo>(UIUtils.Mod).shaderID;
 				return shader != 0 ? shader : shaderID;
 			});
-			ItemShader.preDrawWorld.Add(delegate(int shaderID, Item item) {
-				int shader = item.GetModInfo<CustomizerItemInfo>(TerraUI.Utilities.UIUtils.Mod).shaderID;
+			ShaderLibMod.AddItemShaderWorldHook((shaderID, item) => {
+				int shader = item.GetModInfo<CustomizerItemInfo>(UIUtils.Mod).shaderID;
 				return shader != 0 ? shader : shaderID;
 			});
-
-			ProjectileShader.hooks.Add(delegate(int shaderID, Projectile projectile) {
-				int shader = projectile.GetModInfo<CustomizerProjInfo>(TerraUI.Utilities.UIUtils.Mod).shaderID;
+			ShaderLibMod.AddProjectileShaderHook((shaderID, projectile) => {
+				int shader = projectile.GetModInfo<CustomizerProjInfo>(UIUtils.Mod).shaderID;
+				return shader != 0 ? shader : shaderID;
+			});
+			ShaderLibMod.AddHeldItemShaderHook((shaderID, heldItem, player) => {
+				int shader = heldShaders[player.whoAmI];
 				return shader != 0 ? shader : shaderID;
 			});
 		}
@@ -65,7 +71,7 @@ namespace ItemCustomizer
 
 		public override void PostDrawInterface(SpriteBatch spriteBatch)
 		{
-			UIPlayer player = Main.player[Main.myPlayer].GetModPlayer<UIPlayer>(this);
+			UIPlayer player = Main.LocalPlayer.GetModPlayer<UIPlayer>(this);
 
 			if(!Main.playerInventory)
 				guiOn = false;
@@ -73,7 +79,9 @@ namespace ItemCustomizer
 			if(guiOn) {
 				player.DrawUI(spriteBatch);
 			}
-			if(Main.autoPause && guiOn) {
+
+			//                          Don't cause the stupid multiplayer rapidfire bug :P
+			if(Main.autoPause && guiOn && Main.netMode != NetmodeID.MultiplayerClient) {
 				Main.player[Main.myPlayer].itemTime = 0;
 				Main.player[Main.myPlayer].itemAnimation = 0;
 			}
@@ -91,7 +99,8 @@ namespace ItemCustomizer
 			if(reader.ReadString() == pakCheckString) {
 				int heldShader = reader.ReadInt32();
 
-				if(Main.netMode == 2) {
+				if(Main.netMode == NetmodeID.Server) {
+					heldShaders[whoAmI] = heldShader; //Server now collects heldShader data too for consistency
 					ModPacket pak = GetPacket();
 					pak.Write(pakCheckString);
 					pak.Write(heldShader);
@@ -103,46 +112,40 @@ namespace ItemCustomizer
 			}
 		}
 
-		//Weak referencing functions
+		//Weak referencing functions, have fun flashkirby99 :D
 		public override object Call(params object[] args)
 		{
 			var badStuffException = new Exception("Something bad happened. Perhaps you're missing an argument?");
-			var notAnItemException = new Exception("Incorrect syntax. Try sending in an Item type next time.");
-			var notAProjException = new Exception("Incorrect syntax. Try sending in a Projectile type next time.");
+			var notAnItemException = new ArgumentException("Incorrect syntax. Try sending in an Item type next time.");
+			var notAProjException = new ArgumentException("Incorrect syntax. Try sending in a Projectile type next time.");
 			var invalidCommandException = new Exception("Incorrect command. Are you spelling the command correctly?");
 
 			try {
-				//Allows easily getting the shader of items through weak referencing
-				if((string)args[0] == "GetItemShader") {
+				switch((string)args[0]) {
+				case "GetItemShader":
 					if((args[1] as Item) != null) {
 						return (args[1] as Item).GetModInfo<CustomizerItemInfo>(this);
 					}
 					return notAnItemException;
-
-				//Allows easily getting the shader of projectiles through weak referencing
-				} else if((string)args[0] == "GetProjShader") {
+				case "GetProjShader":
 					if((args[1] as Projectile) != null) {
 						return (args[1] as Projectile).GetModInfo<CustomizerProjInfo>(this).shaderID;
 					}
 					return notAProjException;
-				
-
-				//Allows easily setting the shader of items through weak referencing
-				} else if((string)args[0] == "SetItemShader") {
+				case "SetItemShader":
 					if((args[1] as Item) != null) {
 						(args[1] as Item).GetModInfo<CustomizerItemInfo>(this).shaderID = (int)args[2];
 						return true;
 					}
 					return notAnItemException;
-				
-				//Allows easily setting the shader of projectiles through weak referencing
-				} else if((string)args[0] == "SetProjShader") {
+				case "SetProjShader":
 					if((args[1] as Projectile) != null) {
 						(args[1] as Projectile).GetModInfo<CustomizerProjInfo>(this).shaderID = (int)args[2];
+						return true;
 					}
 					return notAProjException;
 				}
-			} catch(Exception e) {
+			} catch {
 				return badStuffException;
 			}
 

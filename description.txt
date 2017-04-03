@@ -17,7 +17,8 @@ Latest Patch (0.9.3):
 
 Latest Update (1.0):
 - Reworked mod to be fully integrated with ShaderLib
-- Replaced UI code with more stable vanilla-based code
-- NEW TILE for the Item Customizer; previous item now places it
+- Mod now requires ShaderLib to run
+- Multiplayer Rapidfire bug patched
+- Items no longer lose data on reforge
 
 Full Changelog at Mod Homepage

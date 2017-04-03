@@ -71,7 +71,6 @@
     <Compile Include="TerraUI\Utilities\UIColors.cs" />
     <Compile Include="TerraUI\Utilities\UIUtils.cs" />
     <Compile Include="Customizer\CustomizerItem.cs" />
-    <Compile Include="Customizer\ExampleWindow.cs" />
     <Compile Include="Customizer\UIPlayer.cs" />
     <Compile Include="Customizer\CustomItem.cs" />
     <Compile Include="Customizer\CustomizerItemInfo.cs" />
@@ -101,9 +100,6 @@
     <Reference Include="System">
       <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\System.dll</HintPath>
     </Reference>
-    <Reference Include="ShaderLib">
-      <HintPath>..\ShaderLib\Windows.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Xna.Framework">
       <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\ModCompile\Microsoft.Xna.Framework.dll</HintPath>
     </Reference>
@@ -118,6 +114,9 @@
     </Reference>
     <Reference Include="tModLoaderWindows">
       <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\ModCompile\tModLoaderWindows.exe</HintPath>
+    </Reference>
+    <Reference Include="Windows">
+      <HintPath>..\ShaderLib\Windows.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

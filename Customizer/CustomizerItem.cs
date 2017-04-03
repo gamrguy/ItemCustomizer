@@ -14,6 +14,9 @@ namespace ItemCustomizer
 {
 	public class CustomizerItem : GlobalItem
 	{
+		//Used for saving data through reforges
+		string reforgeName = "";
+		int reforgeShader;
 		//public List<int> shotProjectiles = new List<int>();
 
 		public override bool NeedsSaving(Item item)
@@ -27,10 +30,9 @@ namespace ItemCustomizer
 			//Save custom item info
 			CustomizerItemInfo info = item.GetModInfo<CustomizerItemInfo>(mod);
 
-			TagCompound data = new TagCompound{
-				{"Name", info.itemName},
-				{"Shader", ShaderIO.SaveShader(info.shaderID)},
-			};
+			TagCompound data = new TagCompound();
+			data.Set("Name", info.itemName);
+			data.Set("Shader", ShaderIO.SaveShader(info.shaderID));
 
 			return data;
 		}
@@ -40,7 +42,6 @@ namespace ItemCustomizer
 		{
 			CustomizerItemInfo info = item.GetModInfo<CustomizerItemInfo>(mod);
 
-			//TODO: Replace shader loading with ShaderLib implementation
 			info.itemName = tag.GetString("Name");
 			info.shaderID = tag.ContainsKey("ShaderID") ? tag.GetInt("ShaderID") : ShaderIO.LoadShader(tag.GetCompound("Shader"));
 
@@ -59,6 +60,21 @@ namespace ItemCustomizer
 
 			//Set the item's name correctly
 			if(info.itemName != "") item.name = info.itemName;
+		}
+
+		//Stops items from losing their noice data on reforge
+		public override void PreReforge(Item item)
+		{
+			var info = item.GetModInfo<CustomizerItemInfo>(mod);
+			reforgeName = info.itemName;
+			reforgeShader = info.shaderID;
+		}
+
+		public override void PostReforge(Item item)
+		{
+			var info = item.GetModInfo<CustomizerItemInfo>(mod);
+			info.itemName = reforgeName;
+			info.shaderID = reforgeShader;
 		}
 	
 		/*
