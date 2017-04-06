@@ -5,11 +5,7 @@ homepage = http://forums.terraria.org/index.php?threads/tgm1234s-mods.48725/
 hideCode = false
 hideResources = false
 includeSource = true
-<<<<<<< HEAD
 modReferences = ShaderLib
-buildIgnore = *.csproj, *.user, obj/*, bin/*, .vs/*
-=======
 buildIgnore = *.csproj, *.user, obj/*, bin/*, .vs/*, *.gif, .git/*, *.sln, *.userprefs
->>>>>>> 66f524367bd5242c28b52aa60a5c7ccda0483ef1
 includePDB = true
 noCompile = true

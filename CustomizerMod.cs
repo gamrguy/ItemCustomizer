@@ -1,15 +1,11 @@
 ﻿using System;
 using System.IO;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using TerraUI;
 using TerraUI.Utilities;
 using ShaderLib;
-using ShaderLib.Shaders;
-using ShaderLib.Dyes;
 
 namespace ItemCustomizer
 {
@@ -75,7 +71,7 @@ namespace ItemCustomizer
 
 			if(!Main.playerInventory)
 				guiOn = false;
-			
+
 			if(guiOn) {
 				player.DrawUI(spriteBatch);
 			}
@@ -144,6 +140,17 @@ namespace ItemCustomizer
 						return true;
 					}
 					return notAProjException;
+				case "GetItemName":
+					if((args[1] as Item) != null) {
+						return (args[1] as Item).GetModInfo<CustomizerItemInfo>(this).itemName;
+					}
+					return notAnItemException;
+				case "SetItemName":
+					if((args[1] as Item) != null) {
+						(args[1] as Item).GetModInfo<CustomizerItemInfo>(this).itemName = (string)args[2];
+						return true;
+					}
+					return notAnItemException;
 				}
 			} catch {
 				return badStuffException;

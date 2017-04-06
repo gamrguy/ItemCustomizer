@@ -1,8 +1,6 @@
-﻿using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
@@ -242,7 +240,7 @@ namespace ItemCustomizer {
 			}
 		}
 
-		public void panel_GetMoveVector(UIObject sender, MouseButtonEventArgs e) 
+		public void panel_GetMoveVector(UIObject sender, MouseButtonEventArgs e)
 		{
 			if(e.Button == MouseButtons.Left) {
 				if(UIUtils.NoChildrenIntersect(sender, new Rectangle(Main.mouseX, Main.mouseY, 1, 1))) {

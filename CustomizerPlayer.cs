@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Terraria.DataStructures;
 
 namespace ItemCustomizer
 {
@@ -71,4 +67,3 @@ namespace ItemCustomizer
 		}*/
 	}
 }
-

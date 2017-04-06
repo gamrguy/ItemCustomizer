@@ -1,18 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading;
-using Terraria.GameContent.UI.Chat;
-using Terraria.UI.Chat;
-using Terraria.Utilities;
 using Terraria;
-using TerraUI;
 using TerraUI.Utilities;
-using TerraUI.Objects;
 
 namespace TerraUI.Objects {
     public class UITextBox : UIObject {

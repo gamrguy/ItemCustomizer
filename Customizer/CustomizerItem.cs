@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Graphics.Shaders;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using ShaderLib.Shaders;
@@ -76,7 +69,7 @@ namespace ItemCustomizer
 			info.itemName = reforgeName;
 			info.shaderID = reforgeShader;
 		}
-	
+
 		/*
 		public override bool CanUseItem(Item item, Player player)
 		{
@@ -98,4 +91,3 @@ namespace ItemCustomizer
 		}*/
 	}
 }
-

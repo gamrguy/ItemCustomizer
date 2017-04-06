@@ -1,15 +1,23 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="CustomizerMod.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../ShaderLib/ShaderLibMod.cs">
     <Files>
-      <File FileName="../ShaderLib/ShaderLibMod.cs" Line="122" Column="9" />
-      <File FileName="CustomizerPlayer.cs" Line="31" Column="4" />
-      <File FileName="CustomizerMod.cs" Line="40" Column="25" />
-      <File FileName="Customizer/CustomizerItemInfo.cs" Line="12" Column="3" />
-      <File FileName="../SecretDyes/DyesMod.cs" Line="32" Column="4" />
-      <File FileName="description.txt" Line="17" Column="1" />
+      <File FileName="../ShaderLib/build.txt" Line="8" Column="61" />
+      <File FileName="../ShaderLib/ShaderLibMod.cs" Line="44" Column="15" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node />
+          <Node name="ShaderLib" expanded="True">
+            <Node name="ShaderLib" expanded="True">
+              <Node name="ShaderLibMod.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Windows" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
