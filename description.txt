@@ -11,14 +11,11 @@ When you're done, click the "Apply" button, and remove the item(s).
 
 Enjoy!
 
-Latest Patch (0.9.3):
-- Fixed crashes in tModLoader 0.9.2
-- Removed restrictions on what you can dye/rename
+Latest Patch (1.1.1):
+- Items don't lose names or dyes on reforge... again
 
-Latest Update (1.0):
-- Reworked mod to be fully integrated with ShaderLib
-- Mod now requires ShaderLib to run
-- Multiplayer Rapidfire bug patched
-- Items no longer lose data on reforge
+Latest Update (1.1):
+- Updated for 0.10.0.1
+- Complete UI Rework (it actually looks good now!)
 
 Full Changelog at Mod Homepage

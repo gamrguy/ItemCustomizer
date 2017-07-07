@@ -1,23 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="../ShaderLib/ShaderLibMod.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Customizer/CustomizerUI.cs">
     <Files>
-      <File FileName="../ShaderLib/build.txt" Line="8" Column="61" />
-      <File FileName="../ShaderLib/ShaderLibMod.cs" Line="44" Column="15" />
+      <File FileName="../ShaderLib/Shaders/ItemShader.cs" Line="44" Column="3" />
+      <File FileName="Customizer/CustomizerUI.cs" Line="428" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node />
-          <Node name="ShaderLib" expanded="True">
-            <Node name="ShaderLib" expanded="True">
-              <Node name="ShaderLibMod.cs" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Windows" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Mono" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

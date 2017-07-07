@@ -1,3 +1,4 @@
+using System.IO;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -8,66 +9,79 @@ namespace ItemCustomizer
 	public class CustomizerItem : GlobalItem
 	{
 		//Used for saving data through reforges
-		string reforgeName = "";
-		int reforgeShader;
+		static string reforgeName = "";
+		static int reforgeShader;
+
+		//Item globals
+		public string itemName = "";
+		public int shaderID = 0;
+
+		public bool customData { get { return !(itemName == "" && shaderID == 0); } }
+
+		public override bool InstancePerEntity { get { return true; } }
+		public override bool CloneNewInstances { get { return true; } }
+
 		//public List<int> shotProjectiles = new List<int>();
 
 		public override bool NeedsSaving(Item item)
 		{
-			return item.GetModInfo<CustomizerItemInfo>(mod).customData;
+			return customData;
 		}
 
-		//New save function
+		//Saves data
 		public override TagCompound Save(Item item)
 		{
 			//Save custom item info
-			CustomizerItemInfo info = item.GetModInfo<CustomizerItemInfo>(mod);
-
 			TagCompound data = new TagCompound();
-			data.Set("Name", info.itemName);
-			data.Set("Shader", ShaderIO.SaveShader(info.shaderID));
+			data.Set("Name", itemName);
+			data.Set("Shader", ShaderIO.SaveShader(shaderID));
 
 			return data;
 		}
 
-		//New load
+		//Loads data
 		public override void Load(Item item, TagCompound tag)
 		{
-			CustomizerItemInfo info = item.GetModInfo<CustomizerItemInfo>(mod);
-
-			info.itemName = tag.GetString("Name");
-			info.shaderID = tag.ContainsKey("ShaderID") ? tag.GetInt("ShaderID") : ShaderIO.LoadShader(tag.GetCompound("Shader"));
+			itemName = tag.GetString("Name");      //Loading for vanilla shaders | Loading for modded shaders
+			shaderID = tag.ContainsKey("ShaderID") ? tag.GetInt("ShaderID") : ShaderIO.LoadShader(tag.GetCompound("Shader"));
 
 			//Set the item's name correctly
-			if(info.itemName != "") item.name = info.itemName;
+			if(itemName != "") item.SetNameOverride(itemName);
 		}
 
-		//Old load option, included for compatibility reasons
+		//Loads data from before 0.9
 		public override void LoadLegacy(Item item, System.IO.BinaryReader reader)
 		{
-			//Load custom item info
-			CustomizerItemInfo info = item.GetModInfo<CustomizerItemInfo>(mod);
-
-			info.itemName = reader.ReadString();
-			info.shaderID = reader.ReadInt16();
+			itemName = reader.ReadString();
+			shaderID = reader.ReadInt16();
 
 			//Set the item's name correctly
-			if(info.itemName != "") item.name = info.itemName;
+			if(itemName != "") item.SetNameOverride(itemName);
 		}
 
 		//Stops items from losing their noice data on reforge
 		public override void PreReforge(Item item)
 		{
-			var info = item.GetModInfo<CustomizerItemInfo>(mod);
-			reforgeName = info.itemName;
-			reforgeShader = info.shaderID;
+			reforgeName = itemName;
+			reforgeShader = shaderID;
 		}
 
 		public override void PostReforge(Item item)
 		{
-			var info = item.GetModInfo<CustomizerItemInfo>(mod);
-			info.itemName = reforgeName;
-			info.shaderID = reforgeShader;
+			itemName = reforgeName;
+			shaderID = reforgeShader;
+		}
+
+		public override void NetSend(Item item, BinaryWriter writer)
+		{
+			writer.Write(itemName);
+			writer.Write(shaderID);
+		}
+
+		public override void NetReceive(Item item, BinaryReader reader)
+		{
+			itemName = reader.ReadString();
+			shaderID = reader.ReadInt32();
 		}
 
 		/*
@@ -83,7 +97,7 @@ namespace ItemCustomizer
 
 			if(modPlayer.heldShaders[Main.myPlayer] > 0) {
 				foreach(int proj in shotProjectiles) {
-					CustomizerProjInfo shotInfo = Main.projectile[proj].GetModInfo<CustomizerProjInfo>(mod);
+					CustomizerProjInfo shotInfo = Main.projectile[proj].GetGlobalItem<CustomizerProjInfo>(mod);
 					shotInfo.shaderID = modPlayer.heldShaders[Main.myPlayer];
 				}
 				shotProjectiles = new List<int>();

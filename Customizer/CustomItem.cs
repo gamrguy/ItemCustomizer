@@ -6,30 +6,36 @@ namespace ItemCustomizer
 {
 	public class CustomItem : ModItem
 	{
-		public override bool Autoload (ref string name, ref string texture, System.Collections.Generic.IList<EquipType> equips)
+		public override string Texture {
+			get {
+				return "Terraria/Item_" + ItemID.IronAnvil;
+			}
+		}
+
+		public override void SetStaticDefaults()
 		{
-			texture = "Terraria/Item_" + ItemID.IronAnvil; //use anvil texture
-			return true;
+			DisplayName.SetDefault("Item Customizer");
+			Tooltip.SetDefault("Use to open the customizer GUI");
 		}
 
 		public override void SetDefaults ()
 		{
-			item.name = "Item Customizer";
 			item.useStyle = 1;
 			item.useAnimation = 2;
 			item.useTime = 2;
 			item.rare = 1;
-			item.toolTip = "Use to open the Customization GUI";
 		}
 
 		public override bool UseItem(Player player)
 		{
 			if(Main.myPlayer == player.whoAmI) {
-				(mod as CustomizerMod).guiOn = true;
+				CustomizerUI.visible = true;
                 Main.playerInventory = true;
 			}
 			player.itemAnimation = 0;
 			player.itemTime = 0;
+
+			Main.PlaySound(SoundID.MenuOpen);
 			return true;
 		}
 

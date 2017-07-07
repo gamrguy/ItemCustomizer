@@ -28,6 +28,7 @@
         </Command>
       </CustomCommands>
     </CustomCommands>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Windows|AnyCPU' ">
     <Optimize>false</Optimize>
@@ -41,6 +42,7 @@
         </Command>
       </CustomCommands>
     </CustomCommands>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>ItemCustomizer</RootNamespace>
@@ -62,22 +64,33 @@
     <MonoDevelop>
       <Properties>
         <Policies>
-          <TextStylePolicy TabWidth="4" IndentWidth="4" RemoveTrailingWhitespace="True" NoTabsAfterNonTabs="False" FileWidth="120" TabsToSpaces="False" EolMarker="Unix" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csharp" />
-          <CSharpFormattingPolicy IndentBlock="True" IndentBraces="False" IndentSwitchSection="False" IndentSwitchCaseSection="True" LabelPositioning="OneLess" NewLinesForBracesInTypes="True" NewLinesForBracesInMethods="True" NewLinesForBracesInProperties="False" NewLinesForBracesInAccessors="False" NewLinesForBracesInAnonymousMethods="False" NewLinesForBracesInControlBlocks="False" NewLinesForBracesInAnonymousTypes="False" NewLinesForBracesInObjectCollectionArrayInitializers="False" NewLinesForBracesInLambdaExpressionBody="False" NewLineForElse="False" NewLineForCatch="False" NewLineForFinally="False" SpaceWithinMethodDeclarationParenthesis="False" SpaceBetweenEmptyMethodDeclarationParentheses="False" SpaceWithinMethodCallParentheses="False" SpaceBetweenEmptyMethodCallParentheses="False" SpaceWithinExpressionParentheses="False" SpaceWithinCastParentheses="False" SpaceWithinOtherParentheses="False" SpaceAfterCast="False" SpacesIgnoreAroundVariableDeclaration="False" SpaceBetweenEmptySquareBrackets="False" SpaceWithinSquareBrackets="False" SpaceAfterColonInBaseTypeDeclaration="True" SpaceAfterComma="True" SpaceAfterDot="False" SpaceAfterSemicolonsInForStatement="True" SpaceBeforeColonInBaseTypeDeclaration="True" SpaceBeforeComma="False" SpaceBeforeDot="False" SpaceBeforeSemicolonsInForStatement="False" SpacingAroundBinaryOperator="Single" WrappingPreserveSingleLine="True" WrappingKeepStatementsOnSingleLine="True" PlaceSystemDirectiveFirst="True" NewLineForMembersInObjectInit="True" NewLineForMembersInAnonymousTypes="True" NewLineForClausesInQuery="True" SpacingAfterMethodDeclarationName="False" SpaceAfterMethodCallName="False" SpaceAfterControlFlowStatementKeyword="False" SpaceBeforeOpenSquareBracket="False" inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp" />
-          <TextStylePolicy FileWidth="80" TabWidth="4" IndentWidth="4" RemoveTrailingWhitespace="True" NoTabsAfterNonTabs="False" TabsToSpaces="False" EolMarker="Unix" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/plain" />
+          <TextStylePolicy FileWidth="120" TabWidth="4" TabsToSpaces="False" IndentWidth="4" RemoveTrailingWhitespace="True" NoTabsAfterNonTabs="False" EolMarker="Unix" scope="text/x-csharp">
+            <inheritsSet />
+            <inheritsScope />
+          </TextStylePolicy>
+          <CSharpFormattingPolicy IndentBlock="True" IndentBraces="False" IndentSwitchSection="False" IndentSwitchCaseSection="True" LabelPositioning="OneLess" NewLinesForBracesInTypes="True" NewLinesForBracesInMethods="True" NewLinesForBracesInProperties="False" NewLinesForBracesInAccessors="False" NewLinesForBracesInAnonymousMethods="False" NewLinesForBracesInControlBlocks="False" NewLinesForBracesInAnonymousTypes="False" NewLinesForBracesInObjectCollectionArrayInitializers="False" NewLinesForBracesInLambdaExpressionBody="False" NewLineForElse="False" NewLineForCatch="False" NewLineForFinally="False" NewLineForMembersInObjectInit="True" NewLineForMembersInAnonymousTypes="True" NewLineForClausesInQuery="True" SpacingAfterMethodDeclarationName="False" SpaceWithinMethodDeclarationParenthesis="False" SpaceBetweenEmptyMethodDeclarationParentheses="False" SpaceAfterMethodCallName="False" SpaceWithinMethodCallParentheses="False" SpaceBetweenEmptyMethodCallParentheses="False" SpaceAfterControlFlowStatementKeyword="False" SpaceWithinExpressionParentheses="False" SpaceWithinCastParentheses="False" SpaceWithinOtherParentheses="False" SpaceAfterCast="False" SpacesIgnoreAroundVariableDeclaration="False" SpaceBeforeOpenSquareBracket="False" SpaceBetweenEmptySquareBrackets="False" SpaceWithinSquareBrackets="False" SpaceAfterColonInBaseTypeDeclaration="True" SpaceAfterComma="True" SpaceAfterDot="False" SpaceAfterSemicolonsInForStatement="True" SpaceBeforeColonInBaseTypeDeclaration="True" SpaceBeforeComma="False" SpaceBeforeDot="False" SpaceBeforeSemicolonsInForStatement="False" SpacingAroundBinaryOperator="Single" WrappingPreserveSingleLine="True" WrappingKeepStatementsOnSingleLine="True" PlaceSystemDirectiveFirst="True" scope="text/x-csharp">
+            <inheritsSet />
+            <inheritsScope />
+          </CSharpFormattingPolicy>
+          <TextStylePolicy TabWidth="4" TabsToSpaces="False" IndentWidth="4" RemoveTrailingWhitespace="True" NoTabsAfterNonTabs="False" FileWidth="80" EolMarker="Unix" scope="text/plain">
+            <inheritsSet />
+            <inheritsScope />
+          </TextStylePolicy>
         </Policies>
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
   <PropertyGroup>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FNA" Condition="'$(Configuration)' == 'Mono'">
       <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\FNA.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Terraria" Condition="'$(Configuration)' == 'Mono'">
-      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\Terraria.exe</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ShaderLib-Mono" Condition="'$(Configuration)' == 'Mono'">
@@ -108,51 +121,34 @@
       <HintPath>..\ShaderLib\Windows.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Terraria" Condition="'$(Configuration)' == 'Mono'">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\Terraria.exe</HintPath>
+    </Reference>
+    <Reference Include="ReLogic" Condition="'$(Configuration)' == 'Windows'">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\ModCompile\ReLogic.dll</HintPath>
+    </Reference>
+    <Reference Include="ReLogicLinux" Condition="'$(Configuration)' == 'Mono'">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\ModCompile\ReLogicLinux.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomTile.cs" />
     <Compile Include="CustomizerMod.cs" />
     <Compile Include="CustomizerPlayer.cs" />
     <Compile Include="CustomizerProjectile.cs" />
-    <Compile Include="TerraUI\Enums\Contexts.cs" />
-    <Compile Include="TerraUI\Enums\MouseButtons.cs" />
-    <Compile Include="TerraUI\Enums\Sounds.cs" />
-    <Compile Include="TerraUI\Objects\UIButton.cs" />
-    <Compile Include="TerraUI\Objects\UIItemSlot.cs" />
-    <Compile Include="TerraUI\Objects\UILabel.cs" />
-    <Compile Include="TerraUI\Objects\UIObject.cs" />
-    <Compile Include="TerraUI\Objects\UIProgressBar.cs" />
-    <Compile Include="TerraUI\Objects\UITextBox.cs" />
-    <Compile Include="TerraUI\Panels\UIPanel.cs" />
-    <Compile Include="TerraUI\Utilities\BaseTextureDrawing.cs" />
-    <Compile Include="TerraUI\Utilities\Events.cs" />
-    <Compile Include="TerraUI\Utilities\KeyboardUtils.cs" />
-    <Compile Include="TerraUI\Utilities\MouseUtils.cs" />
-    <Compile Include="TerraUI\Utilities\UIColors.cs" />
-    <Compile Include="TerraUI\Utilities\UIUtils.cs" />
     <Compile Include="Customizer\CustomizerItem.cs" />
     <Compile Include="Customizer\UIPlayer.cs" />
     <Compile Include="Customizer\CustomItem.cs" />
-    <Compile Include="Customizer\CustomizerItemInfo.cs" />
-    <Compile Include="TerraUI\Objects\UIFakeItemSlot.cs" />
     <Compile Include="Customizer\CustomizerProjInfo.cs" />
     <Compile Include="Customizer\CustomizerWorld.cs" />
+    <Compile Include="Customizer\CustomizerUI.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="TerraUI\Textures\1x1.png" />
-    <None Include="TerraUI\Textures\Background.png" />
-    <None Include="TerraUI\Textures\BackgroundSolid.png" />
-    <None Include="TerraUI\Textures\Corner.png" />
-    <None Include="TerraUI\Textures\CornerSolid.png" />
-    <None Include="TerraUI\Textures\Side.png" />
-    <None Include="TerraUI\Textures\SideSolid.png" />
-    <None Include="TerraUI\Textures\Buttons\Cross.png" />
-    <None Include="TerraUI\Textures\Buttons\Enter.png" />
-    <None Include="TerraUI\Textures\Buttons\Integrate.png" />
     <None Include="description.txt" />
     <None Include="build.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Customizer\" />
+    <Folder Include="UI\" />
   </ItemGroup>
 </Project>
