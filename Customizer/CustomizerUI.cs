@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
+using Terraria.ModLoader;
 using Terraria.UI;
 using ReLogic.Graphics;
 
@@ -432,6 +433,8 @@ namespace ItemCustomizer
 				Main.hoverItemName = item.HoverName;
 				Main.HoverItem = item;
 			}
+
+
 		}
 
 		private void DefaultClickAction(UIMouseEvent evt, UIElement listeningElement)

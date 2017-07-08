@@ -3,16 +3,17 @@ To begin, craft the Item Customizer at an anvil
 with 5 iron/lead and one Strange Plant.
 
 Place the tile then right-click it to access the GUI.
-Put an item in the left slot, and 
-a dye in the right if you want to dye the item.
+Put an item in the right slot, and 
+a dye in the left if you want to dye the item.
 Type in the text box if you want to change the item's name.
 
 When you're done, click the "Apply" button, and remove the item(s).
 
 Enjoy!
 
-Latest Patch (1.1.1):
-- Items don't lose names or dyes on reforge... again
+Latest Patch (1.1.2):
+- Fix for server crashing, use the mod in multiplayer again!
+- Never see things shaded by accident again, hopefully
 
 Latest Update (1.1):
 - Updated for 0.10.0.1

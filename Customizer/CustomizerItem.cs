@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.ModLoader;
@@ -21,7 +22,7 @@ namespace ItemCustomizer
 		public override bool InstancePerEntity { get { return true; } }
 		public override bool CloneNewInstances { get { return true; } }
 
-		//public List<int> shotProjectiles = new List<int>();
+		public List<int> shotProjectiles = new List<int>();
 
 		public override bool NeedsSaving(Item item)
 		{
@@ -72,6 +73,7 @@ namespace ItemCustomizer
 			shaderID = reforgeShader;
 		}
 
+		//Stops items from losing their noice data when dropped in multiplayer
 		public override void NetSend(Item item, BinaryWriter writer)
 		{
 			writer.Write(itemName);
@@ -83,25 +85,5 @@ namespace ItemCustomizer
 			itemName = reader.ReadString();
 			shaderID = reader.ReadInt32();
 		}
-
-		/*
-		public override bool CanUseItem(Item item, Player player)
-		{
-			shotProjectiles = new List<int>();
-			return base.CanUseItem(item, player);
-		}
-
-		public override void UseItemHitbox(Item item, Player player, ref Rectangle hitbox, ref bool noHitbox)
-		{
-			CustomizerPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<CustomizerPlayer>(mod);
-
-			if(modPlayer.heldShaders[Main.myPlayer] > 0) {
-				foreach(int proj in shotProjectiles) {
-					CustomizerProjInfo shotInfo = Main.projectile[proj].GetGlobalItem<CustomizerProjInfo>(mod);
-					shotInfo.shaderID = modPlayer.heldShaders[Main.myPlayer];
-				}
-				shotProjectiles = new List<int>();
-			}
-		}*/
 	}
 }

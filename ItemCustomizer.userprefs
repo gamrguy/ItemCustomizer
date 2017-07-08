@@ -1,11 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Customizer/CustomizerUI.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="description.txt">
     <Files>
-      <File FileName="../ShaderLib/Shaders/ItemShader.cs" Line="44" Column="3" />
-      <File FileName="Customizer/CustomizerUI.cs" Line="428" Column="1" />
+      <File FileName="description.txt" Line="16" Column="3" />
+      <File FileName="Customizer/CustomizerItem.cs" Line="53" Column="2" />
+      <File FileName="CustomizerProjectile.cs" Line="2" Column="16" />
+      <File FileName="CustomizerPlayer.cs" Line="48" Column="60" />
+      <File FileName="build.txt" Line="2" Column="16" />
     </Files>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Mono" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Windows" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
