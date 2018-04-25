@@ -46,7 +46,6 @@
     <Compile Include="Customizer\CustomizerProjInfo.cs" />
     <Compile Include="Customizer\CustomizerUI.cs" />
     <Compile Include="Customizer\CustomizerWorld.cs" />
-    <Compile Include="Customizer\UIPlayer.cs" />
     <Compile Include="CustomTile.cs" />
   </ItemGroup>
   <ItemGroup>

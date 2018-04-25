@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using ShaderLib;
+using Terraria.ModLoader.IO;
 
 namespace ItemCustomizer
 {
@@ -55,6 +56,20 @@ namespace ItemCustomizer
 
 				CustomizerProjectile.newProjectiles = new List<int>();
 			}
+		}
+
+		public override TagCompound Save() {
+			CustomizerMod realMod = mod as CustomizerMod;
+			return new TagCompound{
+				{"ItemSlot", ItemIO.Save(realMod.customizerUI.itemSlot.item)},
+				{"DyeSlot", ItemIO.Save(realMod.customizerUI.dyeSlot.item)}
+			};
+		}
+
+		public override void Load(TagCompound tag) {
+			CustomizerMod realMod = mod as CustomizerMod;
+			realMod.customizerUI.itemSlot.item = ItemIO.Load(tag.GetCompound("ItemSlot"));
+			realMod.customizerUI.dyeSlot.item = ItemIO.Load(tag.GetCompound("DyeSlot"));
 		}
 	}
 }
