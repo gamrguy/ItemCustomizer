@@ -7,7 +7,7 @@ to their weapons (and various other items). Projectiles fired by weapons are als
 As of 1.0, Item Customizer now supports some weak referencing using `Mod.Call()`.
 These are:
 - `Call(“GetItemShader”, Item item)`: returns an `int`, the shader ID of the given item
-- `Call(“SetItemShader”, Item item, int shaderID)`: sets the item’s shader ID to the one given
+- `Call(“SetItemShader”, Item item, ShaderID shaderID)`: sets the item’s shader ID to the one given
 - `Call(“GetProjShader”, Projectile proj)`: returns an `int`, the shader ID of the given projectile
 - `Call(“SetProjShader”, Projectile proj, int shaderID)`: sets the projectile’s shader ID to the one given
 - `Call("GetItemName", Item item)`: returns a `string`, the item's set custom name
