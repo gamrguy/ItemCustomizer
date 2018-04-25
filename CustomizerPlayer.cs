@@ -2,11 +2,14 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using ShaderLib;
 
 namespace ItemCustomizer
 {
 	public class CustomizerPlayer : ModPlayer
 	{
+		//public int ammoShader = 0;
+
 		public override void PreUpdate()
 		{
 			if(Main.myPlayer != player.whoAmI) {
@@ -20,36 +23,36 @@ namespace ItemCustomizer
 				held = player.inventory[player.selectedItem];
 			}
 			if(!held.active || held.IsAir) {
-				(mod as CustomizerMod).heldShaders[player.whoAmI] = 0;
+				(mod as CustomizerMod).heldShaders[player.whoAmI] = new ShaderID(-1);
 			} else {
 				CustomizerItem info = held.GetGlobalItem<CustomizerItem>(mod);
 				(mod as CustomizerMod).heldShaders[player.whoAmI] = info.shaderID;
 			}
 
-			if(Main.netMode == NetmodeID.MultiplayerClient) {
-				ModPacket pak = mod.GetPacket();
-				pak.Write(CustomizerMod.pakCheckString);
-				pak.Write((mod as CustomizerMod).heldShaders[Main.myPlayer]);
-				pak.Send();
-			}
+			CustomizerMod.mod.SendHeldShaderPacket();
 		}
 
 		public override bool PreItemCheck()
 		{
-			//Main.NewText("Clearing list");
+			CustomizerMod.mod.ammoShaders[Main.myPlayer] = new ShaderID(-1);
 			CustomizerProjectile.newProjectiles = new List<int>();
 			return true;
 		}
 
 		public override void PostItemCheck()
 		{
-			//Main.NewText("PostItemCheck doing its thing? " + CustomizerProjectile.newProjectiles.Count + " in list");
-			if(CustomizerMod.mod.heldShaders[Main.myPlayer] > 0) {
+			if(CustomizerMod.mod.heldShaders[player.whoAmI].ID > 0 || CustomizerMod.mod.ammoShaders[player.whoAmI].ID > 0) {
 				foreach(int proj in CustomizerProjectile.newProjectiles) {
-					//Main.NewText("Applying shader to projectile " + proj);
 					CustomizerProjInfo shotInfo = Main.projectile[proj].GetGlobalProjectile<CustomizerProjInfo>(mod);
-					shotInfo.shaderID = CustomizerMod.mod.heldShaders[Main.myPlayer];
+
+					//Yes, there's a specific thing for the Vortex Beater. It's the only ammo-using weapon I know that displays as a projectile.
+					if(Main.projectile[proj].type == ProjectileID.VortexBeater || CustomizerMod.mod.ammoShaders[player.whoAmI].ID <= 0) {
+						shotInfo.shaderID = CustomizerMod.mod.heldShaders[player.whoAmI].ID;
+					} else {
+						shotInfo.shaderID = CustomizerMod.mod.ammoShaders[player.whoAmI].ID;
+					}
 				}
+
 				CustomizerProjectile.newProjectiles = new List<int>();
 			}
 		}

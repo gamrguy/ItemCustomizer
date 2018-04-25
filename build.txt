@@ -1,11 +1,10 @@
+modReferences = ShaderLib
 author = thegamemaster1234
-version = 1.1.2
+version = 2.0
 displayName = Item Customizer
 homepage = http://forums.terraria.org/index.php?threads/tgm1234s-mods.48725/
 hideCode = false
 hideResources = false
 includeSource = true
-modReferences = ShaderLib
-buildIgnore = *.csproj, *.user, obj/*, bin/*, .vs/*, *.gif, .git/*, *.sln, *.userprefs
 includePDB = true
-noCompile = true
+languageVersion = 6

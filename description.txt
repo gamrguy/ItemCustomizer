@@ -2,21 +2,22 @@ This mod allows you to rename and dye items.
 To begin, craft the Item Customizer at an anvil
 with 5 iron/lead and one Strange Plant.
 
-Place the tile then right-click it to access the GUI.
+Use the "Item Customizer" to access the UI.
 Put an item in the right slot, and 
 a dye in the left if you want to dye the item.
 Type in the text box if you want to change the item's name.
 
 When you're done, click the "Apply" button, and remove the item(s).
+Or leave them in there, I don't care.
 
 Enjoy!
 
-Latest Patch (1.1.2):
-- Fix for server crashing, use the mod in multiplayer again!
-- Never see things shaded by accident again, hopefully
+Additional features:
+- Dye ammo for it to be dyed separately from your bow/gun/rocket launcher!
+- Dye anything for it to look cool in your inventory!
 
-Latest Update (1.1):
-- Updated for 0.10.0.1
-- Complete UI Rework (it actually looks good now!)
+Latest Update (2.0):
+- Updated to latest version of ShaderLib
+- Fixed bug causing crashes when using the UI in multiplayer
 
 Full Changelog at Mod Homepage

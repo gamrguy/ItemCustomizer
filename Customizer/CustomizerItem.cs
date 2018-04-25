@@ -3,7 +3,7 @@ using System.IO;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using ShaderLib.Shaders;
+using ShaderLib;
 
 namespace ItemCustomizer
 {
@@ -11,22 +11,22 @@ namespace ItemCustomizer
 	{
 		//Used for saving data through reforges
 		static string reforgeName = "";
-		static int reforgeShader;
+		static ShaderID reforgeShader;
 
 		//Item globals
 		public string itemName = "";
-		public int shaderID = 0;
+		public ShaderID shaderID = new ShaderID(-1);
 
-		public bool customData { get { return !(itemName == "" && shaderID == 0); } }
+		public bool CustomData => !(itemName == "" && shaderID.ID == -1);
 
-		public override bool InstancePerEntity { get { return true; } }
-		public override bool CloneNewInstances { get { return true; } }
+		public override bool InstancePerEntity => true;
+		public override bool CloneNewInstances => true;
 
 		public List<int> shotProjectiles = new List<int>();
 
 		public override bool NeedsSaving(Item item)
 		{
-			return customData;
+			return CustomData;
 		}
 
 		//Saves data
@@ -35,7 +35,7 @@ namespace ItemCustomizer
 			//Save custom item info
 			TagCompound data = new TagCompound();
 			data.Set("Name", itemName);
-			data.Set("Shader", ShaderIO.SaveShader(shaderID));
+			data.Set("Shader", ShaderID.Save(shaderID));
 
 			return data;
 		}
@@ -43,28 +43,19 @@ namespace ItemCustomizer
 		//Loads data
 		public override void Load(Item item, TagCompound tag)
 		{
-			itemName = tag.GetString("Name");      //Loading for vanilla shaders | Loading for modded shaders
-			shaderID = tag.ContainsKey("ShaderID") ? tag.GetInt("ShaderID") : ShaderIO.LoadShader(tag.GetCompound("Shader"));
-
-			//Set the item's name correctly
-			if(itemName != "") item.SetNameOverride(itemName);
-		}
-
-		//Loads data from before 0.9
-		public override void LoadLegacy(Item item, System.IO.BinaryReader reader)
-		{
-			itemName = reader.ReadString();
-			shaderID = reader.ReadInt16();
+			itemName = tag.GetString("Name");
+			shaderID = ShaderID.Load(tag.GetCompound("Shader"));
 
 			//Set the item's name correctly
 			if(itemName != "") item.SetNameOverride(itemName);
 		}
 
 		//Stops items from losing their noice data on reforge
-		public override void PreReforge(Item item)
+		public override bool NewPreReforge(Item item)
 		{
 			reforgeName = itemName;
 			reforgeShader = shaderID;
+			return base.NewPreReforge(item);
 		}
 
 		public override void PostReforge(Item item)
@@ -77,13 +68,13 @@ namespace ItemCustomizer
 		public override void NetSend(Item item, BinaryWriter writer)
 		{
 			writer.Write(itemName);
-			writer.Write(shaderID);
+			ShaderID.Write(writer, shaderID);
 		}
 
 		public override void NetReceive(Item item, BinaryReader reader)
 		{
 			itemName = reader.ReadString();
-			shaderID = reader.ReadInt32();
+			shaderID = ShaderID.Read(reader);
 		}
 	}
 }

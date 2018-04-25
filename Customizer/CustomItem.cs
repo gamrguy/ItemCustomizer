@@ -6,11 +6,7 @@ namespace ItemCustomizer
 {
 	public class CustomItem : ModItem
 	{
-		public override string Texture {
-			get {
-				return "Terraria/Item_" + ItemID.IronAnvil;
-			}
-		}
+		public override string Texture => "Terraria/Item_" + ItemID.IronAnvil;
 
 		public override void SetStaticDefaults()
 		{

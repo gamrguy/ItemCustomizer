@@ -9,6 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
 using ReLogic.Graphics;
+using ShaderLib;
 
 namespace ItemCustomizer
 {
@@ -58,7 +59,7 @@ namespace ItemCustomizer
 			SetPosition(dyeSlot, height / 2 - 30, width / 3 - 30, 60, 60);
 			customizerPanel.Append(dyeSlot);
 
-			itemSlot = new UIItemSlot(ItemSlot.Context.ChestItem);
+			itemSlot = new UIItemSlot(ItemSlot.Context.BankItem);
 			SetPosition(itemSlot, height / 2 - 30, width * (2.0f / 3.0f) - 30, 60, 60);
 			customizerPanel.Append(itemSlot);
 
@@ -81,9 +82,9 @@ namespace ItemCustomizer
 				info.itemName = textBox.Text;
 
 				if(dyeSlot.item != null && dyeSlot.item.active && !dyeSlot.item.IsAir) {
-					info.shaderID = GameShaders.Armor.GetShaderIdFromItemId(dyeSlot.item.type);
+					info.shaderID = ShaderLoader.GetShaderID(dyeSlot.item);
 				} else {
-					info.shaderID = 0;
+					info.shaderID = new ShaderID(-1);
 				}
 			}
 
@@ -95,7 +96,7 @@ namespace ItemCustomizer
 			if(itemSlot.item != null && itemSlot.item.active && !itemSlot.item.IsAir) {
 				CustomizerItem info = itemSlot.item.GetGlobalItem<CustomizerItem>(CustomizerMod.mod);
 				info.itemName = "";
-				info.shaderID = 0;
+				info.shaderID = new ShaderID(-1);
 				itemSlot.item.ClearNameOverride();
 			}
 			textBox.SetText("");
@@ -424,7 +425,9 @@ namespace ItemCustomizer
 
 			float oldScale = Main.inventoryScale;
 			Main.inventoryScale = scale;
+
 			ItemSlot.Draw(spriteBatch, ref item, context, new Vector2(innerDimensions.X, innerDimensions.Y));
+
 			Main.inventoryScale = oldScale;
 
 			bool isHovering = Main.mouseX >= innerDimensions.X && Main.mouseX - innerDimensions.X <= Width.Pixels &&
@@ -433,8 +436,6 @@ namespace ItemCustomizer
 				Main.hoverItemName = item.HoverName;
 				Main.HoverItem = item;
 			}
-
-
 		}
 
 		private void DefaultClickAction(UIMouseEvent evt, UIElement listeningElement)

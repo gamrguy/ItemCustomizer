@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Mono</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{656AFCF7-8B8A-4E4D-9F3B-5A7AE2681825}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -12,37 +12,22 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono|AnyCPU' ">
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType></DebugType>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Mono</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CustomCommands>
-      <CustomCommands>
-        <Command>
-          <type>AfterBuild</type>
-          <command>cp bin/${ProjectConfigName}/${TargetName} ${ProjectConfigName}.dll</command>
-        </Command>
-      </CustomCommands>
-    </CustomCommands>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Windows|AnyCPU' ">
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Windows</OutputPath>
-    <WarningLevel>4</WarningLevel>
-    <CustomCommands>
-      <CustomCommands>
-        <Command>
-          <type>AfterBuild</type>
-          <command>cp bin/${ProjectConfigName}/${TargetName} ${ProjectConfigName}.dll</command>
-        </Command>
-      </CustomCommands>
-    </CustomCommands>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>ItemCustomizer</RootNamespace>
@@ -51,6 +36,18 @@
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CustomGlobalItem.cs" />
+    <Compile Include="CustomizerMod.cs" />
+    <Compile Include="CustomizerPlayer.cs" />
+    <Compile Include="CustomizerProjectile.cs" />
+    <Compile Include="CustomizerShader.cs" />
+    <Compile Include="Customizer\CustomItem.cs" />
+    <Compile Include="Customizer\CustomizerItem.cs" />
+    <Compile Include="Customizer\CustomizerProjInfo.cs" />
+    <Compile Include="Customizer\CustomizerUI.cs" />
+    <Compile Include="Customizer\CustomizerWorld.cs" />
+    <Compile Include="Customizer\UIPlayer.cs" />
+    <Compile Include="CustomTile.cs" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
@@ -61,94 +58,40 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
     <VisualStudio AllowExistingFolder="true" />
-    <MonoDevelop>
-      <Properties>
-        <Policies>
-          <TextStylePolicy FileWidth="120" TabWidth="4" TabsToSpaces="False" IndentWidth="4" RemoveTrailingWhitespace="True" NoTabsAfterNonTabs="False" EolMarker="Unix" scope="text/x-csharp">
-            <inheritsSet />
-            <inheritsScope />
-          </TextStylePolicy>
-          <CSharpFormattingPolicy IndentBlock="True" IndentBraces="False" IndentSwitchCaseSection="True" LabelPositioning="OneLess" NewLinesForBracesInTypes="True" NewLinesForBracesInMethods="True" NewLineForMembersInObjectInit="True" NewLineForMembersInAnonymousTypes="True" NewLineForClausesInQuery="True" SpacingAfterMethodDeclarationName="False" SpaceWithinMethodDeclarationParenthesis="False" SpaceBetweenEmptyMethodDeclarationParentheses="False" SpaceAfterMethodCallName="False" SpaceWithinMethodCallParentheses="False" SpaceBetweenEmptyMethodCallParentheses="False" SpaceWithinExpressionParentheses="False" SpaceWithinCastParentheses="False" SpaceWithinOtherParentheses="False" SpaceAfterCast="False" SpacesIgnoreAroundVariableDeclaration="False" SpaceBeforeOpenSquareBracket="False" SpaceBetweenEmptySquareBrackets="False" SpaceWithinSquareBrackets="False" SpaceAfterColonInBaseTypeDeclaration="True" SpaceAfterComma="True" SpaceAfterDot="False" SpaceAfterSemicolonsInForStatement="True" SpaceBeforeColonInBaseTypeDeclaration="True" SpaceBeforeComma="False" SpaceBeforeDot="False" SpaceBeforeSemicolonsInForStatement="False" SpacingAroundBinaryOperator="Single" WrappingPreserveSingleLine="True" WrappingKeepStatementsOnSingleLine="True" PlaceSystemDirectiveFirst="True" IndentSwitchSection="False" NewLinesForBracesInProperties="False" NewLinesForBracesInAccessors="False" NewLinesForBracesInAnonymousMethods="False" NewLinesForBracesInControlBlocks="False" NewLinesForBracesInAnonymousTypes="False" NewLinesForBracesInObjectCollectionArrayInitializers="False" NewLinesForBracesInLambdaExpressionBody="False" NewLineForElse="False" NewLineForCatch="False" NewLineForFinally="False" SpaceAfterControlFlowStatementKeyword="False" scope="text/x-csharp">
-            <inheritsSet />
-            <inheritsScope />
-          </CSharpFormattingPolicy>
-          <TextStylePolicy TabWidth="4" TabsToSpaces="False" IndentWidth="4" RemoveTrailingWhitespace="True" NoTabsAfterNonTabs="False" FileWidth="80" EolMarker="Unix" scope="text/plain">
-            <inheritsSet />
-            <inheritsScope />
-          </TextStylePolicy>
-        </Policies>
-      </Properties>
-    </MonoDevelop>
   </ProjectExtensions>
   <PropertyGroup>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FNA" Condition="'$(Configuration)' == 'Mono'">
-      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\FNA.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="ShaderLib-Mono" Condition="'$(Configuration)' == 'Mono'">
-      <HintPath>..\ShaderLib\Mono.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Xna.Framework" Condition="'$(Configuration)' == 'Windows'">
-      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\ModCompile\Microsoft.Xna.Framework.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Game" Condition="'$(Configuration)' == 'Windows'">
-      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\ModCompile\Microsoft.Xna.Framework.Game.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Graphics" Condition="'$(Configuration)' == 'Windows'">
-      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\ModCompile\Microsoft.Xna.Framework.Graphics.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Xact" Condition="'$(Configuration)' == 'Windows'">
-      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\ModCompile\Microsoft.Xna.Framework.Xact.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="tModLoaderWindows" Condition="'$(Configuration)' == 'Windows'">
-      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\ModCompile\tModLoaderWindows.exe</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="ShaderLib-Windows" Condition="'$(Configuration)' == 'Windows'">
-      <HintPath>..\ShaderLib\Windows.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Terraria" Condition="'$(Configuration)' == 'Mono'">
-      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\Terraria.exe</HintPath>
-    </Reference>
-    <Reference Include="ReLogic" Condition="'$(Configuration)' == 'Windows'">
-      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\ModCompile\ReLogic.dll</HintPath>
-    </Reference>
-    <Reference Include="ReLogicLinux" Condition="'$(Configuration)' == 'Mono'">
-      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\ModCompile\ReLogicLinux.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomTile.cs" />
-    <Compile Include="CustomizerMod.cs" />
-    <Compile Include="CustomizerPlayer.cs" />
-    <Compile Include="CustomizerProjectile.cs" />
-    <Compile Include="Customizer\CustomizerItem.cs" />
-    <Compile Include="Customizer\UIPlayer.cs" />
-    <Compile Include="Customizer\CustomItem.cs" />
-    <Compile Include="Customizer\CustomizerProjInfo.cs" />
-    <Compile Include="Customizer\CustomizerWorld.cs" />
-    <Compile Include="Customizer\CustomizerUI.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
   </ItemGroup>
   <ItemGroup>
-    <None Include="description.txt" />
     <None Include="build.txt" />
+    <None Include="description.txt" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Customizer\" />
-    <Folder Include="UI\" />
+    <Reference Include="Microsoft.Xna.Framework">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\ModCompile\Microsoft.Xna.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Game">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\ModCompile\Microsoft.Xna.Framework.Game.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Graphics">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\ModCompile\Microsoft.Xna.Framework.Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="ReLogic">
+      <HintPath>..\..\..\..\..\..\Downloads\ReLogic.dll</HintPath>
+    </Reference>
+    <Reference Include="ShaderLib">
+      <HintPath>..\ShaderLib\obj\Debug\ShaderLib.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Terraria">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Terraria\Terraria.exe</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
