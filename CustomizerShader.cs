@@ -26,5 +26,10 @@ namespace ItemCustomizer
 		public override void HeldItemShader(ref int shaderID, Item item, PlayerDrawInfo drawInfo) {
 			shaderID = shaderID > 0 ? shaderID : CustomizerMod.mod.heldShaders[drawInfo.drawPlayer.whoAmI].ID;
 		}
+
+		public override int NPCShader(NPC npc, SpriteBatch spriteBatch, Color drawColor)
+		{
+			return npc.GetGlobalNPC<CustomizerNPCInfo>().shaderID;
+		}
 	}
 }

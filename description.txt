@@ -14,10 +14,13 @@ Enjoy!
 
 Additional features:
 - Dye ammo for it to be dyed separately from your bow/gun/rocket launcher!
+- Dye equipment to save dyes directly onto your favorite vanities!
 - Dye anything for it to look cool in your inventory!
 
-Latest Update (2.0):
-- Updated to latest version of ShaderLib
-- Fixed bug causing crashes when using the UI in multiplayer
+Latest Update (2.1.0):
+- Ammo now always uses its own dye, so you can use undyed projectiles with dyed bows/guns
+- Now also dyes dusts!
+- Dyed equipment now uses its dye when equipped
+- Bonus feature: the Paint Gun can dye NPCs it hits!
 
 Full Changelog at Mod Homepage

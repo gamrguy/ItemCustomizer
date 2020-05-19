@@ -1,96 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\..\references\tModLoader.targets" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{656AFCF7-8B8A-4E4D-9F3B-5A7AE2681825}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>ItemCustomizer</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
+    <TargetFramework>net45</TargetFramework>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <RootNamespace>ItemCustomizer</RootNamespace>
-  </PropertyGroup>
-  <PropertyGroup>
-    <RunPostBuildEvent>Always</RunPostBuildEvent>
-  </PropertyGroup>
+  <Target Name="BuildMod" AfterTargets="Build">
+    <Exec Command="&quot;$(tMLBuildServerPath)&quot; -build $(ProjectDir) -eac $(TargetPath) -define $(DefineConstants) -unsafe $(AllowUnsafeBlocks)" />
+  </Target>
   <ItemGroup>
-    <Compile Include="CustomGlobalItem.cs" />
-    <Compile Include="CustomizerMod.cs" />
-    <Compile Include="CustomizerPlayer.cs" />
-    <Compile Include="CustomizerProjectile.cs" />
-    <Compile Include="CustomizerShader.cs" />
-    <Compile Include="Customizer\CustomItem.cs" />
-    <Compile Include="Customizer\CustomizerItem.cs" />
-    <Compile Include="Customizer\CustomizerProjInfo.cs" />
-    <Compile Include="Customizer\CustomizerUI.cs" />
-    <Compile Include="Customizer\CustomizerWorld.cs" />
-    <Compile Include="CustomTile.cs" />
-  </ItemGroup>
-  <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
-  <ProjectExtensions>
-    <VisualStudio AllowExistingFolder="true" />
-  </ProjectExtensions>
-  <PropertyGroup>
-  </PropertyGroup>
-  <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="build.txt" />
-    <None Include="description.txt" />
-    <None Include="README.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.Xna.Framework">
-      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\ModCompile\Microsoft.Xna.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Game">
-      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\ModCompile\Microsoft.Xna.Framework.Game.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Graphics">
-      <HintPath>..\..\..\..\Steam\steamapps\common\Terraria\Terraria.app\Contents\MacOS\ModCompile\Microsoft.Xna.Framework.Graphics.dll</HintPath>
-    </Reference>
-    <Reference Include="ReLogic">
-      <HintPath>..\..\..\..\..\..\Downloads\ReLogic.dll</HintPath>
-    </Reference>
-    <Reference Include="ShaderLib">
-      <HintPath>..\ShaderLib\obj\Debug\ShaderLib.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Terraria">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Terraria\Terraria.exe</HintPath>
-    </Reference>
+    <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
   </ItemGroup>
 </Project>

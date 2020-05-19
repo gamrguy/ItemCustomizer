@@ -1,0 +1,9 @@
+.editorconfig
+.vs/
+Properties/
+bin/
+obj/
+*.csproj.user
+*.dll
+*.pdb
+*.log

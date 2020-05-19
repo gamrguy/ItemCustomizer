@@ -4,6 +4,8 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using ShaderLib;
+using Terraria.Graphics.Shaders;
+using Steamworks;
 
 namespace ItemCustomizer
 {
@@ -22,7 +24,23 @@ namespace ItemCustomizer
 		public override bool InstancePerEntity => true;
 		public override bool CloneNewInstances => true;
 
-		public List<int> shotProjectiles = new List<int>();
+		public override void UseItemHitbox(Item item, Player player, ref Microsoft.Xna.Framework.Rectangle hitbox, ref bool noHitbox)
+		{
+			CustomizerProjectile.newDusts = new List<int>();
+		}
+
+		public override void MeleeEffects(Item item, Player player, Microsoft.Xna.Framework.Rectangle hitbox)
+		{
+			if (shaderID.ID > 0)
+			{
+				foreach (int dust in CustomizerProjectile.newDusts)
+				{
+					Main.dust[dust].shader = GameShaders.Armor.GetSecondaryShader(shaderID.ID, Main.player[item.owner]);
+				}
+
+				CustomizerProjectile.newDusts = new List<int>();
+			}
+		}
 
 		public override bool NeedsSaving(Item item)
 		{

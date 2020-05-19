@@ -1,10 +1,8 @@
-modReferences = ShaderLib
-author = thegamemaster1234
-version = 2.0
 displayName = Item Customizer
+author = thegamemaster1234
+version = 2.1.0
 homepage = http://forums.terraria.org/index.php?threads/tgm1234s-mods.48725/
-hideCode = false
-hideResources = false
+modReferences = ShaderLib
 includeSource = true
 includePDB = true
-languageVersion = 6
+sortAfter = ShaderLib

@@ -73,7 +73,7 @@ namespace ItemCustomizer
 		private void ApplyButtonClicked(UIMouseEvent evt, UIElement listeningElement)
 		{
 			if(itemSlot.item != null && itemSlot.item.active && !itemSlot.item.IsAir) {
-				CustomizerItem info = itemSlot.item.GetGlobalItem<CustomizerItem>(CustomizerMod.mod);
+				CustomizerItem info = itemSlot.item.GetGlobalItem<CustomizerItem>();
 				if(textBox.Text != "") {
 					itemSlot.item.SetNameOverride(textBox.Text);
 				} else {
@@ -94,7 +94,7 @@ namespace ItemCustomizer
 		private void ResetButtonClicked(UIMouseEvent evt, UIElement listeningElement)
 		{
 			if(itemSlot.item != null && itemSlot.item.active && !itemSlot.item.IsAir) {
-				CustomizerItem info = itemSlot.item.GetGlobalItem<CustomizerItem>(CustomizerMod.mod);
+				CustomizerItem info = itemSlot.item.GetGlobalItem<CustomizerItem>();
 				info.itemName = "";
 				info.shaderID = new ShaderID(-1);
 				itemSlot.item.ClearNameOverride();
@@ -113,7 +113,7 @@ namespace ItemCustomizer
 		private void ItemSlotClicked(UIMouseEvent evt, UIElement listeningElement)
 		{
 			if(itemSlot.item != null && itemSlot.item.active && !itemSlot.item.IsAir) {
-				CustomizerItem info = itemSlot.item.GetGlobalItem<CustomizerItem>(CustomizerMod.mod);
+				CustomizerItem info = itemSlot.item.GetGlobalItem<CustomizerItem>();
 				if(info.itemName != "") textBox.SetText(info.itemName);
 				else textBox.SetText("");
 			} else textBox.SetText("");
