@@ -17,6 +17,10 @@ Additional features:
 - Dye equipment to save dyes directly onto your favorite vanities!
 - Dye anything for it to look cool in your inventory!
 
+Latest Patch (2.1.1):
+- Fixed Familiar Wig crashing. I think.
+I don't know how this happened or why it stopped
+
 Latest Update (2.1.0):
 - Ammo now always uses its own dye, so you can use undyed projectiles with dyed bows/guns
 - Now also dyes dusts!
