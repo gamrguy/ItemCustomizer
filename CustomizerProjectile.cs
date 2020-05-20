@@ -48,7 +48,7 @@ namespace ItemCustomizer
 
 		public override bool PreKill(Projectile projectile, int timeLeft) {
 			newProjectiles = new List<int>();
-			return base.PreKill(projectile, timeLeft);
+			return true;
 		}
 
 		public override void Kill(Projectile projectile, int timeLeft) {

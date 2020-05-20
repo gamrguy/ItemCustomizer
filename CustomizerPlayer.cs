@@ -37,14 +37,14 @@ namespace ItemCustomizer
 
 		public override bool PreItemCheck()
 		{
-			CustomizerMod.mod.ammoShaders[Main.myPlayer] = new ShaderID(-1);
+			CustomizerMod.mod.ammoShaders[player.whoAmI] = new ShaderID(-1);
 			CustomizerProjectile.newProjectiles = new List<int>();
 			return true;
 		}
 
 		public override void PostItemCheck()
 		{
-			if(CustomizerMod.mod.heldShaders[player.whoAmI].ID > 0 || CustomizerMod.mod.ammoShaders[player.whoAmI].ID > 0) {
+			if(CustomizerMod.mod.heldShaders[player.whoAmI] != null && (CustomizerMod.mod.heldShaders[player.whoAmI].ID > 0 || CustomizerMod.mod.ammoShaders[player.whoAmI].ID > 0)) {
 				foreach(int proj in CustomizerProjectile.newProjectiles) {
 					CustomizerProjInfo shotInfo = Main.projectile[proj].GetGlobalProjectile<CustomizerProjInfo>();
 
