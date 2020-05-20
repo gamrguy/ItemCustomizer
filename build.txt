@@ -1,6 +1,6 @@
 displayName = Item Customizer
 author = thegamemaster1234
-version = 2.1.0
+version = 2.1.1
 homepage = http://forums.terraria.org/index.php?threads/tgm1234s-mods.48725/
 modReferences = ShaderLib
 includeSource = true
