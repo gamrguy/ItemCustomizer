@@ -33,8 +33,8 @@ namespace ItemCustomizer
 		{
 			return npc.GetGlobalNPC<CustomizerNPCInfo>().shaderID;
 		}
-
-		public override void PlayerShader(ref PlayerShaderData data, PlayerDrawInfo drawInfo)
+		
+		/*public override void PlayerShader(ref PlayerShaderData data, PlayerDrawInfo drawInfo)
 		{
 			var player = drawInfo.drawPlayer;
 
@@ -104,6 +104,6 @@ namespace ItemCustomizer
 					}
 				}
 			}
-		}
+		}*/
 	}
 }
