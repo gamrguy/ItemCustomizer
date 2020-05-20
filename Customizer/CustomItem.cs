@@ -16,10 +16,10 @@ namespace ItemCustomizer
 
 		public override void SetDefaults ()
 		{
-			item.useStyle = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.useAnimation = 2;
 			item.useTime = 2;
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 		}
 
 		public override bool UseItem(Player player)

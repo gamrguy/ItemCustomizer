@@ -17,14 +17,13 @@ Additional features:
 - Dye equipment to save dyes directly onto your favorite vanities!
 - Dye anything for it to look cool in your inventory!
 
-Latest Patch (2.1.1):
-- Fixed Familiar Wig crashing. I think.
-I don't know how this happened or why it stopped
+Latest Patch (2.1.2):
+- Fixed the equip dyeing, probably
 
 Latest Update (2.1.0):
 - Ammo now always uses its own dye, so you can use undyed projectiles with dyed bows/guns
 - Now also dyes dusts!
 - Dyed equipment now uses its dye when equipped
-- Bonus feature: the Paint Gun can dye NPCs it hits!
+- Bonus feature: the Paintball Gun can dye NPCs it hits!
 
 Full Changelog at Mod Homepage
