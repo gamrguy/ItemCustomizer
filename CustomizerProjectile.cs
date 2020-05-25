@@ -99,7 +99,7 @@ namespace ItemCustomizer
 			tempDusts = new List<int>();
 		}
 
-		// Paintballs, water gun, and slime gun paint NPCs
+		// Paintball gun paints NPCs
 		public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)
 		{
 			if (Main.netMode != NetmodeID.Server && projectile.type == ProjectileID.PainterPaintball)
