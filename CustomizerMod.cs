@@ -137,22 +137,34 @@ namespace ItemCustomizer
 		}
 
 		public override void HandlePacket(BinaryReader reader, int whoAmI) {
-			string type = reader.ReadString();
+			var type = (PacketType)reader.ReadByte();
 
 			if(Main.netMode == NetmodeID.Server) {
 				ModPacket pak = GetPacket();
-				pak.Write(type);
+				pak.Write((byte)type);
 				ShaderID.Write(pak, ShaderID.Read(reader));
-				pak.Write(whoAmI);
+				if (type == PacketType.NPC) pak.Write(reader.ReadInt32());
+				else pak.Write(whoAmI);
 				pak.Send(ignoreClient: whoAmI);
 			} else {
 				ShaderID shader = ShaderID.Read(reader);
-				if(type == "item") heldShaders[reader.ReadInt32()] = shader;
-				else if(type == "ammo") ammoShaders[reader.ReadInt32()] = shader;
+                switch (type)
+                {
+					case PacketType.ITEM:
+						heldShaders[reader.ReadInt32()] = shader;
+						break;
+					case PacketType.AMMO:
+						ammoShaders[reader.ReadInt32()] = shader;
+						break;
+					case PacketType.NPC:
+						Main.npc[reader.ReadInt32()].GetGlobalNPC<CustomizerNPCInfo>().shaderID = shader.ID;
+						break;
+				}
 			}
 		}
 
 		//Weak referencing functions, have fun flashkirby99 :D
+		//...he just used reflection instead. figures, lmao
 		public override object Call(params object[] args) {
 			var badStuffException = new Exception("Something bad happened. Perhaps you're missing an argument?");
 			var notAnItemException = new ArgumentException("Incorrect syntax. Try sending in an Item type next time.");
@@ -205,7 +217,7 @@ namespace ItemCustomizer
 		public void SendHeldShaderPacket() {
 			if(Main.netMode == NetmodeID.MultiplayerClient) {
 				ModPacket pak = GetPacket();
-				pak.Write("item");
+				pak.Write((byte)PacketType.ITEM);
 				ShaderID.Write(pak, heldShaders[Main.myPlayer]);
 				pak.Send();
 			}
@@ -214,10 +226,29 @@ namespace ItemCustomizer
 		public void SendAmmoShaderPacket() {
 			if(Main.netMode == NetmodeID.MultiplayerClient) {
 				ModPacket pak = GetPacket();
-				pak.Write("ammo");
+				pak.Write((byte)PacketType.AMMO);
 				ShaderID.Write(pak, ammoShaders[Main.myPlayer]);
 				pak.Send();
 			}
 		}
+
+		public void SendNPCShaderPacket(NPC npc, CustomizerNPCInfo npcInfo)
+		{
+			if (Main.netMode == NetmodeID.MultiplayerClient)
+			{
+				ModPacket pak = GetPacket();
+				pak.Write((byte)PacketType.NPC);
+				ShaderID.Write(pak, new ShaderID(npcInfo.shaderID));
+				pak.Write(npc.whoAmI);
+				pak.Send();
+			}
+		}
+
+		public enum PacketType
+        {
+			ITEM,
+			AMMO,
+			NPC
+        }
 	}
 }

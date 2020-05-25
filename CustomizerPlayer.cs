@@ -37,8 +37,14 @@ namespace ItemCustomizer
 
 		public override bool PreItemCheck()
 		{
-			CustomizerMod.mod.ammoShaders[player.whoAmI] = new ShaderID(-1);
-			CustomizerProjectile.newProjectiles = new List<int>();
+			if (Main.netMode == NetmodeID.SinglePlayer || Main.netMode == NetmodeID.MultiplayerClient)
+			{
+				if (Main.myPlayer == player.whoAmI)
+				{
+					CustomizerMod.mod.ammoShaders[player.whoAmI] = new ShaderID(-1);
+				}
+				CustomizerProjectile.newProjectiles = new List<int>();
+			}
 			return true;
 		}
 

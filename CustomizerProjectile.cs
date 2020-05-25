@@ -99,13 +99,18 @@ namespace ItemCustomizer
 			tempDusts = new List<int>();
 		}
 
-		// Paintballs paint NPCs
+		// Paintballs, water gun, and slime gun paint NPCs
 		public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)
 		{
-			if (projectile.type == ProjectileID.PainterPaintball)
+			if (Main.netMode != NetmodeID.Server && projectile.type == ProjectileID.PainterPaintball)
 			{
-				var info = projectile.GetGlobalProjectile<CustomizerProjInfo>();
-				target.GetGlobalNPC<CustomizerNPCInfo>().shaderID = info.shaderID;
+				var projInfo = projectile.GetGlobalProjectile<CustomizerProjInfo>();
+				var npcInfo = target.GetGlobalNPC<CustomizerNPCInfo>();
+				if (projInfo.shaderID != npcInfo.shaderID)
+				{
+					npcInfo.shaderID = projInfo.shaderID;
+					CustomizerMod.mod.SendNPCShaderPacket(target, npcInfo);
+				}
 			}
 		}
 	}
