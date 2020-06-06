@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ShaderLib;
-using ShaderLib.System;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace ItemCustomizer
@@ -14,25 +9,23 @@ namespace ItemCustomizer
 	class CustomizerShader : GlobalShader
 	{
 		public override int ItemInventoryShader(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-			return item.GetGlobalItem<CustomizerItem>().shaderID.ID;
+			return item.Customizer().shaderID.ID;
 		}
 
 		public override int ItemWorldShader(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
-			return item.GetGlobalItem<CustomizerItem>().shaderID.ID;
+			return item.Customizer().shaderID.ID;
 		}
 
 		public override int ProjectileShader(Projectile projectile, SpriteBatch spriteBatch, Color lightColor) {
-			return projectile.GetGlobalProjectile<CustomizerProjInfo>().shaderID;
+			return projectile.Customizer().shaderID;
 		}
 
 		public override void HeldItemShader(ref int shaderID, Item item, PlayerDrawInfo drawInfo) {
-			if (CustomizerMod.mod.heldShaders[drawInfo.drawPlayer.whoAmI] != null)
-				shaderID = shaderID > 0 ? shaderID : CustomizerMod.mod.heldShaders[drawInfo.drawPlayer.whoAmI].ID;
+			shaderID = shaderID > 0 ? shaderID : item.Customizer().shaderID.ID;
 		}
 
-		public override int NPCShader(NPC npc, SpriteBatch spriteBatch, Color drawColor)
-		{
-			return npc.GetGlobalNPC<CustomizerNPCInfo>().shaderID;
+		public override int NPCShader(NPC npc, SpriteBatch spriteBatch, Color drawColor) {
+			return npc.Customizer().shaderID;
 		}
 	}
 }

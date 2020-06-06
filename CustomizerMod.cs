@@ -8,28 +8,17 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.UI;
 using ShaderLib;
-using MonoMod.RuntimeDetour;
-using System.Reflection;
 using Terraria.Graphics.Shaders;
 
 namespace ItemCustomizer
 {
 	public class CustomizerMod : Mod
 	{
-		public ShaderID[] heldShaders = new ShaderID[Main.maxPlayers];
 		public ShaderID[] ammoShaders = new ShaderID[Main.maxPlayers];
 
 		public static CustomizerMod mod;
 		public CustomizerUI customizerUI;
 		public UserInterface customizerInterface;
-
-		public CustomizerMod() {
-			Properties = new ModProperties() {
-				Autoload = true,
-				AutoloadGores = true,
-				AutoloadSounds = true
-			};
-		}
 
 		public override void Load() {
 			if(Main.netMode != NetmodeID.Server) {
@@ -42,10 +31,10 @@ namespace ItemCustomizer
 			//Here, have some absolute black magic. It's fun being a wizard! Or not.
 			//Record created dusts for shading later
 			On.Terraria.Dust.NewDust += Dust_Capture;
-			
+
 			//Capture dusts from projectile updates
 			On.Terraria.Projectile.Update += Proj_Update;
-			
+
 			//Attempt to skip NPC hit/death dusts
 			On.Terraria.NPC.VanillaHitEffect += NPC_SkipHit;
 
@@ -62,17 +51,14 @@ namespace ItemCustomizer
 
 		private void Proj_Update(On.Terraria.Projectile.orig_Update orig, Projectile self, int i) {
 			CustomizerProjectile.newDusts = new List<int>();
-			
+
 			orig(self, i);
 
-			if (self.active)
-			{
+			if(self.active) {
 				CustomizerProjInfo info = self.GetGlobalProjectile<CustomizerProjInfo>();
 
-				if (info.shaderID > 0)
-				{
-					foreach (int dust in CustomizerProjectile.newDusts)
-					{
+				if(info.shaderID > 0) {
+					foreach(int dust in CustomizerProjectile.newDusts) {
 						Main.dust[dust].shader = GameShaders.Armor.GetSecondaryShader(info.shaderID, Main.player[self.owner]);
 					}
 				}
@@ -88,13 +74,14 @@ namespace ItemCustomizer
 			CustomizerProjectile.tempDusts = new List<int>();
 		}
 
-		public override void Unload()
-		{
+		public override void Unload() {
 			On.Terraria.Dust.NewDust -= Dust_Capture;
 			On.Terraria.Projectile.Update -= Proj_Update;
 			On.Terraria.NPC.VanillaHitEffect -= NPC_SkipHit;
 
 			mod = null;
+			customizerUI = null;
+			customizerInterface = null;
 		}
 
 		public override void AddRecipeGroups() {
@@ -143,21 +130,17 @@ namespace ItemCustomizer
 				ModPacket pak = GetPacket();
 				pak.Write((byte)type);
 				ShaderID.Write(pak, ShaderID.Read(reader));
-				if (type == PacketType.NPC) pak.Write(reader.ReadInt32());
+				if(type == PacketType.NPC) pak.Write(reader.ReadInt32());
 				else pak.Write(whoAmI);
 				pak.Send(ignoreClient: whoAmI);
 			} else {
 				ShaderID shader = ShaderID.Read(reader);
-                switch (type)
-                {
-					case PacketType.ITEM:
-						heldShaders[reader.ReadInt32()] = shader;
-						break;
+				switch(type) {
 					case PacketType.AMMO:
 						ammoShaders[reader.ReadInt32()] = shader;
 						break;
 					case PacketType.NPC:
-						Main.npc[reader.ReadInt32()].GetGlobalNPC<CustomizerNPCInfo>().shaderID = shader.ID;
+						Main.npc[reader.ReadInt32()].Customizer().shaderID = shader.ID;
 						break;
 				}
 			}
@@ -214,15 +197,6 @@ namespace ItemCustomizer
 			throw invalidCommandException;
 		}
 
-		public void SendHeldShaderPacket() {
-			if(Main.netMode == NetmodeID.MultiplayerClient) {
-				ModPacket pak = GetPacket();
-				pak.Write((byte)PacketType.ITEM);
-				ShaderID.Write(pak, heldShaders[Main.myPlayer]);
-				pak.Send();
-			}
-		}
-
 		public void SendAmmoShaderPacket() {
 			if(Main.netMode == NetmodeID.MultiplayerClient) {
 				ModPacket pak = GetPacket();
@@ -232,10 +206,8 @@ namespace ItemCustomizer
 			}
 		}
 
-		public void SendNPCShaderPacket(NPC npc, CustomizerNPCInfo npcInfo)
-		{
-			if (Main.netMode == NetmodeID.MultiplayerClient)
-			{
+		public void SendNPCShaderPacket(NPC npc, CustomizerNPCInfo npcInfo) {
+			if(Main.netMode == NetmodeID.MultiplayerClient) {
 				ModPacket pak = GetPacket();
 				pak.Write((byte)PacketType.NPC);
 				ShaderID.Write(pak, new ShaderID(npcInfo.shaderID));
@@ -245,10 +217,9 @@ namespace ItemCustomizer
 		}
 
 		public enum PacketType
-        {
-			ITEM,
+		{
 			AMMO,
 			NPC
-        }
+		}
 	}
 }

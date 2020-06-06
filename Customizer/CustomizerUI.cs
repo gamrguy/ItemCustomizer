@@ -4,9 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.UI;
 using ReLogic.Graphics;
 using ShaderLib;
@@ -21,8 +19,7 @@ namespace ItemCustomizer
 		public NewUITextBox textBox;
 		public static bool visible = false;
 
-		public override void OnInitialize()
-		{
+		public override void OnInitialize() {
 			int width = 240;
 			int height = 140;
 
@@ -70,10 +67,9 @@ namespace ItemCustomizer
 			Append(customizerPanel);
 		}
 
-		private void ApplyButtonClicked(UIMouseEvent evt, UIElement listeningElement)
-		{
+		private void ApplyButtonClicked(UIMouseEvent evt, UIElement listeningElement) {
 			if(itemSlot.item != null && itemSlot.item.active && !itemSlot.item.IsAir) {
-				CustomizerItem info = itemSlot.item.GetGlobalItem<CustomizerItem>();
+				CustomizerItem info = itemSlot.item.Customizer();
 				if(textBox.Text != "") {
 					itemSlot.item.SetNameOverride(textBox.Text);
 				} else {
@@ -91,10 +87,9 @@ namespace ItemCustomizer
 			Main.PlaySound(SoundID.Grab);
 		}
 
-		private void ResetButtonClicked(UIMouseEvent evt, UIElement listeningElement)
-		{
+		private void ResetButtonClicked(UIMouseEvent evt, UIElement listeningElement) {
 			if(itemSlot.item != null && itemSlot.item.active && !itemSlot.item.IsAir) {
-				CustomizerItem info = itemSlot.item.GetGlobalItem<CustomizerItem>();
+				CustomizerItem info = itemSlot.item.Customizer();
 				info.itemName = "";
 				info.shaderID = new ShaderID(-1);
 				itemSlot.item.ClearNameOverride();
@@ -104,16 +99,14 @@ namespace ItemCustomizer
 			Main.PlaySound(SoundID.Grab);
 		}
 
-		private void CloseButtonClicked(UIMouseEvent evt, UIElement listeningElement)
-		{
+		private void CloseButtonClicked(UIMouseEvent evt, UIElement listeningElement) {
 			Main.PlaySound(SoundID.MenuClose);
 			visible = false;
 		}
 
-		private void ItemSlotClicked(UIMouseEvent evt, UIElement listeningElement)
-		{
+		private void ItemSlotClicked(UIMouseEvent evt, UIElement listeningElement) {
 			if(itemSlot.item != null && itemSlot.item.active && !itemSlot.item.IsAir) {
-				CustomizerItem info = itemSlot.item.GetGlobalItem<CustomizerItem>();
+				CustomizerItem info = itemSlot.item.Customizer();
 				if(info.itemName != "") textBox.SetText(info.itemName);
 				else textBox.SetText("");
 			} else textBox.SetText("");
@@ -121,14 +114,12 @@ namespace ItemCustomizer
 
 		Vector2 offset;
 		public bool dragging = false;
-		private void DragStart(UIMouseEvent evt, UIElement listeningElement)
-		{
+		private void DragStart(UIMouseEvent evt, UIElement listeningElement) {
 			offset = new Vector2(evt.MousePosition.X - customizerPanel.Left.Pixels, evt.MousePosition.Y - customizerPanel.Top.Pixels);
 			dragging = true;
 		}
 
-		private void DragEnd(UIMouseEvent evt, UIElement listeningElement)
-		{
+		private void DragEnd(UIMouseEvent evt, UIElement listeningElement) {
 			Vector2 end = evt.MousePosition;
 			dragging = false;
 
@@ -138,21 +129,18 @@ namespace ItemCustomizer
 			Recalculate();
 		}
 
-		protected override void DrawSelf(SpriteBatch spriteBatch)
-		{
-			Vector2 MousePosition = new Vector2((float)Main.mouseX, (float)Main.mouseY);
-			if(customizerPanel.ContainsPoint(MousePosition)) {
+		protected override void DrawSelf(SpriteBatch spriteBatch) {
+			if(customizerPanel.ContainsPoint(Main.MouseScreen)) {
 				Main.LocalPlayer.mouseInterface = true;
 			}
 			if(dragging) {
-				customizerPanel.Left.Set(MousePosition.X - offset.X, 0f);
-				customizerPanel.Top.Set(MousePosition.Y - offset.Y, 0f);
+				customizerPanel.Left.Set(Main.MouseScreen.X - offset.X, 0f);
+				customizerPanel.Top.Set(Main.MouseScreen.Y - offset.Y, 0f);
 				Recalculate();
 			}
 		}
 
-		private void SetPosition(UIElement element, float top, float left, float width, float height, float perc = 0)
-		{
+		private void SetPosition(UIElement element, float top, float left, float width, float height, float perc = 0) {
 			element.Top.Set(top, perc);
 			element.Left.Set(left, perc);
 			element.Width.Set(width, perc);
@@ -181,21 +169,18 @@ namespace ItemCustomizer
 		internal bool unfocusOnTab = true;
 
 
-		public NewUITextBox(string text, float textScale = 1, bool large = false) : base("", textScale, large)
-		{
+		public NewUITextBox(string text, float textScale = 1, bool large = false) : base("", textScale, large) {
 			hintText = text;
 			SetPadding(0);
 			//			keyBoardInput.newKeyEvent += KeyboardInput_newKeyEvent;
 		}
 
-		public override void Click(UIMouseEvent evt)
-		{
+		public override void Click(UIMouseEvent evt) {
 			Focus();
 			base.Click(evt);
 		}
 
-		public void SetUnfocusKeys(bool unfocusOnEnter, bool unfocusOnTab)
-		{
+		public void SetUnfocusKeys(bool unfocusOnEnter, bool unfocusOnTab) {
 			this.unfocusOnEnter = unfocusOnEnter;
 			this.unfocusOnTab = unfocusOnTab;
 		}
@@ -220,8 +205,7 @@ namespace ItemCustomizer
 		//	}
 		//}
 
-		public void Unfocus()
-		{
+		public void Unfocus() {
 			if(focused) {
 				focused = false;
 				Main.blockInput = false;
@@ -230,8 +214,7 @@ namespace ItemCustomizer
 			}
 		}
 
-		public void Focus()
-		{
+		public void Focus() {
 			if(!focused) {
 				Main.clrInput();
 				focused = true;
@@ -241,8 +224,7 @@ namespace ItemCustomizer
 			}
 		}
 
-		public override void Update(GameTime gameTime)
-		{
+		public override void Update(GameTime gameTime) {
 			Vector2 MousePosition = new Vector2((float)Main.mouseX, (float)Main.mouseY);
 			if(!ContainsPoint(MousePosition) && Main.mouseLeft) {
 				// TODO, figure out how to refocus without triggering unfocus while clicking enable button.
@@ -251,8 +233,7 @@ namespace ItemCustomizer
 			base.Update(gameTime);
 		}
 
-		public void Write(string text)
-		{
+		public void Write(string text) {
 			base.SetText(base.Text.Insert(this._cursor, text));
 			this._cursor += text.Length;
 			_cursor = Math.Min(Text.Length, _cursor);
@@ -261,8 +242,7 @@ namespace ItemCustomizer
 			OnTextChanged?.Invoke();
 		}
 
-		public void WriteAll(string text)
-		{
+		public void WriteAll(string text) {
 			bool changed = text != Text;
 			base.SetText(text);
 			this._cursor = text.Length;
@@ -274,8 +254,7 @@ namespace ItemCustomizer
 			}
 		}
 
-		public override void SetText(string text, float textScale, bool large)
-		{
+		public override void SetText(string text, float textScale, bool large) {
 			if(text.ToString().Length > this._maxLength) {
 				text = text.ToString().Substring(0, this._maxLength);
 			}
@@ -288,13 +267,11 @@ namespace ItemCustomizer
 			OnTextChanged?.Invoke();
 		}
 
-		public void SetTextMaxLength(int maxLength)
-		{
+		public void SetTextMaxLength(int maxLength) {
 			this._maxLength = maxLength;
 		}
 
-		public void Backspace()
-		{
+		public void Backspace() {
 			if(this._cursor == 0) {
 				return;
 			}
@@ -302,28 +279,24 @@ namespace ItemCustomizer
 			Recalculate();
 		}
 
-		public void CursorLeft()
-		{
+		public void CursorLeft() {
 			if(this._cursor == 0) {
 				return;
 			}
 			this._cursor--;
 		}
 
-		public void CursorRight()
-		{
+		public void CursorRight() {
 			if(this._cursor < base.Text.Length) {
 				this._cursor++;
 			}
 		}
 
-		static bool JustPressed(Keys key)
-		{
+		static bool JustPressed(Keys key) {
 			return Main.inputText.IsKeyDown(key) && !Main.oldInputText.IsKeyDown(key);
 		}
 
-		protected override void DrawSelf(SpriteBatch spriteBatch)
-		{
+		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			if(focused) {
 				Terraria.GameInput.PlayerInput.WritingText = true;
 				Main.instance.HandleIME();
@@ -400,15 +373,14 @@ namespace ItemCustomizer
 	/// <summary>
 	/// A UIElement for an item slot, because vanilla doesn't have one.
 	/// </summary>
-	public class UIItemSlot : UIElement 
+	public class UIItemSlot : UIElement
 	{
 		public Texture2D backgroundTexture = Main.inventoryBackTexture;
 		public Item item;
 		public int context;
 		public float scale = 1.0f;
 
-		public UIItemSlot(int c = 0)
-		{
+		public UIItemSlot(int c = 0) {
 			context = c;
 			OnClick += DefaultClickAction;
 			OnRightClick += DefaultRightClickAction;
@@ -417,8 +389,7 @@ namespace ItemCustomizer
 			item.active = false;
 		}
 
-		protected override void DrawSelf(SpriteBatch spriteBatch)
-		{
+		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			CalculatedStyle innerDimensions = GetInnerDimensions();
 
 			spriteBatch.Draw(backgroundTexture, innerDimensions.Position(), default(Color));
@@ -432,19 +403,17 @@ namespace ItemCustomizer
 
 			bool isHovering = Main.mouseX >= innerDimensions.X && Main.mouseX - innerDimensions.X <= Width.Pixels &&
 			 				  Main.mouseY >= innerDimensions.Y && Main.mouseY - innerDimensions.Y <= Height.Pixels;
-			if(isHovering) { 
+			if(isHovering) {
 				Main.hoverItemName = item.HoverName;
-				Main.HoverItem = item;
+				Main.HoverItem = item.Clone();
 			}
 		}
 
-		private void DefaultClickAction(UIMouseEvent evt, UIElement listeningElement)
-		{
+		private void DefaultClickAction(UIMouseEvent evt, UIElement listeningElement) {
 			ItemSlot.LeftClick(ref item, context);
 		}
 
-		private void DefaultRightClickAction(UIMouseEvent evt, UIElement listeningElement)
-		{
+		private void DefaultRightClickAction(UIMouseEvent evt, UIElement listeningElement) {
 			ItemSlot.RightClick(ref item, context);
 		}
 	}
@@ -467,18 +436,15 @@ namespace ItemCustomizer
 		public bool isHovering;      //whether the mouse is currently hovering over this button
 		public float textScale;      //the current text scaling
 
-		public UIClassicTextButton() : this("")
-		{
-			
+		public UIClassicTextButton() : this("") {
+
 		}
 
-		public UIClassicTextButton(string text) : this(text, Color.White, Color.Yellow, Color.Black)
-		{
-			
+		public UIClassicTextButton(string text) : this(text, Color.White, Color.Yellow, Color.Black) {
+
 		}
 
-		public UIClassicTextButton(string str, Color textC, Color hoverC, Color outlineC, float min = 1.0f, float max = 1.3f, int spd = 20)
-		{
+		public UIClassicTextButton(string str, Color textC, Color hoverC, Color outlineC, float min = 1.0f, float max = 1.3f, int spd = 20) {
 			text = str;
 			textColor = textC;
 			hoverColor = hoverC;
@@ -493,12 +459,11 @@ namespace ItemCustomizer
 			Height.Set(dim.Y, 0);
 		}
 
-		public override void Update(GameTime gameTime)
-		{
+		public override void Update(GameTime gameTime) {
 			CalculatedStyle innerDimensions = GetInnerDimensions();
 			bool justStartedHovering = isHovering;
-			isHovering = Main.mouseX >= innerDimensions.X && Main.mouseX - innerDimensions.X <= Width.Pixels && 
-			             Main.mouseY >= innerDimensions.Y && Main.mouseY - innerDimensions.Y <= Height.Pixels;
+			isHovering = Main.mouseX >= innerDimensions.X && Main.mouseX - innerDimensions.X <= Width.Pixels &&
+						 Main.mouseY >= innerDimensions.Y && Main.mouseY - innerDimensions.Y <= Height.Pixels;
 			justStartedHovering = isHovering && !justStartedHovering ? true : false;
 			float mult = (gameTime.ElapsedGameTime.Milliseconds / 1000.0f) * 60.0f; //speed stuff up when game is slow
 			textScale += isHovering ? mult * ((maxScale - minScale) / speed) : mult * (-(maxScale - 1.0f) / speed);
@@ -508,8 +473,7 @@ namespace ItemCustomizer
 			if(justStartedHovering) Main.PlaySound(hoverSound);
 		}
 
-		protected override void DrawSelf(SpriteBatch spriteBatch)
-		{
+		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			CalculatedStyle innerDimensions = GetInnerDimensions();
 			Color color = isHovering ? hoverColor : textColor;
 			Utils.DrawBorderStringFourWay(spriteBatch, Main.fontItemStack, text, innerDimensions.X + Width.Pixels / 2, innerDimensions.Y + Height.Pixels / 2, color, outlineColor, new Vector2(Width.Pixels, Height.Pixels) / 2, textScale);

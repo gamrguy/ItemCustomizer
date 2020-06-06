@@ -7,3 +7,4 @@ obj/
 *.dll
 *.pdb
 *.log
+*.sln

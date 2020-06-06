@@ -17,15 +17,10 @@ Additional features:
 - Dye equipment to save dyes directly onto your favorite vanities!
 - Dye anything for it to look cool in your inventory!
 
-Latest Patch (2.1.4):
-- Slightly improved netcode efficiency
-- Added netcode for NPCs dyed by Paintball Gun
-- Fixed netcode for ammo dyes
-
-Latest Update (2.1.0):
-- Ammo now always uses its own dye, so you can use undyed projectiles with dyed bows/guns
-- Now also dyes dusts!
-- Dyed equipment now uses its dye when equipped
-- Bonus feature: the Paintball Gun can dye NPCs it hits!
+Latest Update (2.2.0):
+- The Anti-Netcode Update
+- Refactors netcode to be less stupid by removing netcode, not even kidding
+- Even more wrong projectile shading fixes
+- Finally fixes the infinite knockback bug
 
 Full Changelog at Mod Homepage
