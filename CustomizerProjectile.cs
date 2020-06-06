@@ -9,10 +9,10 @@ namespace ItemCustomizer
 {
 	public class CustomizerProjectile : GlobalProjectile
 	{
-		public static List<Projectile> newProjectiles = new List<Projectile>();
-		public static List<Projectile> childProjectiles = new List<Projectile>();
-		public static List<int> newDusts = new List<int>();
-		public static List<int> tempDusts = new List<int>();
+		public static List<Projectile> newProjectiles;
+		public static List<Projectile> childProjectiles;
+		public static List<int> newDusts;
+		public static List<int> tempDusts;
 
 		public override void SetDefaults(Projectile projectile) {
 			newProjectiles.Add(projectile);

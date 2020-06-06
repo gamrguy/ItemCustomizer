@@ -41,6 +41,10 @@ namespace ItemCustomizer
 			ShaderLoader.RegisterMod(this);
 
 			mod = this;
+			CustomizerProjectile.newProjectiles = new List<Projectile>();
+			CustomizerProjectile.childProjectiles = new List<Projectile>();
+			CustomizerProjectile.newDusts = new List<int>();
+			CustomizerProjectile.tempDusts = new List<int>();
 		}
 
 		private int Dust_Capture(On.Terraria.Dust.orig_NewDust orig, Microsoft.Xna.Framework.Vector2 Position, int Width, int Height, int Type, float SpeedX, float SpeedY, int Alpha, Microsoft.Xna.Framework.Color newColor, float Scale) {
@@ -80,8 +84,10 @@ namespace ItemCustomizer
 			On.Terraria.NPC.VanillaHitEffect -= NPC_SkipHit;
 
 			mod = null;
-			customizerUI = null;
-			customizerInterface = null;
+			CustomizerProjectile.newProjectiles = null;
+			CustomizerProjectile.childProjectiles = null;
+			CustomizerProjectile.newDusts = null;
+			CustomizerProjectile.tempDusts = null;
 		}
 
 		public override void AddRecipeGroups() {
