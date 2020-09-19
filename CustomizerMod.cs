@@ -153,7 +153,8 @@ namespace ItemCustomizer
 						break;
 					case PacketType.PROJ:
 						// read in reverse order because why ???
-						// if this works, what the fuck
+						// none of this actually works anyway
+						// if GlobalItem had a net sync function that'd be great
 						int identity = reader.ReadInt32();
 						byte owner = reader.ReadByte();
 						//int idx = Projectile.GetByUUID(owner, identity);
@@ -258,14 +259,14 @@ namespace ItemCustomizer
 		}
 
 		public void SendProjShaderPacket(Projectile projectile, CustomizerProjInfo projInfo) {
-			if(Main.netMode == NetmodeID.MultiplayerClient) {
+			/*if(Main.netMode == NetmodeID.MultiplayerClient) {
 				ModPacket pak = GetPacket();
 				pak.Write((byte)PacketType.PROJ);
 				ShaderID.Write(pak, new ShaderID(projInfo.shaderID));
 				pak.Write(projectile.owner);
 				pak.Write(projectile.identity);
 				pak.Send();
-            }
+            }*/
         }
 
 		public enum PacketType

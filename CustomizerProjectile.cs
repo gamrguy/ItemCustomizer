@@ -29,7 +29,7 @@ namespace ItemCustomizer
 
 				//Apply shader of the player's held item provided it meets all this criteria to make absolute certain a player fired it
 				//As of 1.1.3 this now only applies to OTHER PLAYER's projectiles! Until I can get the better system working with multiplayer, that is.
-				/*if(projInfo.parent && !(hook || pet || lightPet) && !projectile.npcProj && !projectile.trap && projectile.owner != 255 && projectile.owner != Main.myPlayer && Main.player[projectile.owner].itemAnimation > 0 && ((projectile.friendly || !projectile.hostile) || projectile.minion) && projInfo.shaderID < 0) {
+				if(projInfo.parent && !(hook || pet || lightPet) && !projectile.npcProj && !projectile.trap && projectile.owner != 255 && projectile.owner != Main.myPlayer && Main.player[projectile.owner].itemAnimation > 0 && ((projectile.friendly || !projectile.hostile) || projectile.minion) && projInfo.shaderID < 0) {
 					//Main.NewText("Ammo shader for projectile: " + CustomizerMod.mod.ammoShaders[projectile.owner]);
 					var player = Main.player[projectile.owner];
 					if(!player.HeldItem.IsAir) {
@@ -41,7 +41,7 @@ namespace ItemCustomizer
 					}
 				} else if(projInfo.shaderID < 0) {
 					projInfo.shaderID = 0;
-				}*/
+				}
 				
 				childProjectiles = new List<Projectile>();
 				//newDusts = new List<int>();
@@ -112,7 +112,8 @@ namespace ItemCustomizer
 		// Paintball gun paints NPCs
 		public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit) {
 			NetExclude(NetmodeID.Server, () => {
-				if(projectile.type == ProjectileID.PainterPaintball) {
+				// Don't try to paint dead NPCs. It doesn't turn out very well.
+				if(projectile.type == ProjectileID.PainterPaintball && damage < target.life) {
 					var projInfo = projectile.GetGlobalProjectile<CustomizerProjInfo>();
 					var npcInfo = target.GetGlobalNPC<CustomizerNPCInfo>();
 					if(projInfo.shaderID != npcInfo.shaderID) {
