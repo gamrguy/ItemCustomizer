@@ -74,7 +74,7 @@ namespace ItemCustomizer
 					CustomizerProjInfo childInfo = proj.GetGlobalProjectile<CustomizerProjInfo>();
 
 					var player = Main.player[projectile.owner];
-					childInfo.shaderID = (projectile.type == ProjectileID.VortexBeater && !player.HeldItem.IsAir) ? CustomizerMod.mod.ammoShaders[projectile.owner].ID : info.shaderID;
+					childInfo.UpdateShaderID(projectile, projectile.type == ProjectileID.VortexBeater && !player.HeldItem.IsAir ? CustomizerMod.mod.ammoShaders[projectile.owner].ID : info.shaderID);
 					childInfo.parent = false;
 				}
 
@@ -112,7 +112,8 @@ namespace ItemCustomizer
 		// Paintball gun paints NPCs
 		public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit) {
 			NetExclude(NetmodeID.Server, () => {
-				if(projectile.type == ProjectileID.PainterPaintball) {
+				// Don't try to paint dead NPCs. It doesn't turn out very well.
+				if(projectile.type == ProjectileID.PainterPaintball && damage < target.life) {
 					var projInfo = projectile.GetGlobalProjectile<CustomizerProjInfo>();
 					var npcInfo = target.GetGlobalNPC<CustomizerNPCInfo>();
 					if(projInfo.shaderID != npcInfo.shaderID) {

@@ -19,7 +19,7 @@ namespace ItemCustomizer
 			if(player.whoAmI == Main.myPlayer) {
 				CustomizerItem info = item.Customizer();
 
-				if(item.owner <= Main.maxPlayers) {
+				if(item.owner < Main.maxPlayers) {
 					CustomizerMod.mod.ammoShaders[item.owner] = info.shaderID;
 				}
 				//Main.NewText("Ammo shader: " + info.shaderID);
