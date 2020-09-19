@@ -23,7 +23,8 @@ Latest Update (2.2.0):
 - Even more wrong projectile shading fixes
 - Finally fixes the infinite knockback bug
 
-Latest Patch (2.2.1):
+Latest Patch (2.2.2):
+- Fixed edge case relating to multiplayer and ammo consumption
 - Fixed a silly multiplayer issue that was embarrassingly trivial in the end
 - Extra failsafe checks for things
 
