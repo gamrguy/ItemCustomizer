@@ -9,15 +9,25 @@ namespace ItemCustomizer
 	class CustomizerShader : GlobalShader
 	{
 		public override int ItemInventoryShader(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-			return item.Customizer().shaderID.ID;
+			// Failsafe for items that haven't been initialized properly
+			// This shouldn't be necessary, but fixes crashes until tML can fix it
+			if(item.Customizer() is CustomizerItem customizer) return customizer.shaderID.ID;
+			else return 0;
 		}
 
 		public override int ItemWorldShader(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
-			return item.Customizer().shaderID.ID;
+			// Failsafe for items that haven't been initialized properly
+			// This shouldn't be necessary, but fixes crashes until tML can fix it
+			if(item.Customizer() is CustomizerItem customizer) return customizer.shaderID.ID;
+			else return 0;
 		}
 
 		public override int ProjectileShader(Projectile projectile, SpriteBatch spriteBatch, Color lightColor) {
-			return projectile.Customizer().shaderID;
+			// Failsafe for projectiles that haven't been initialized properly
+			// No idea how much this has actually been happening, if at all, or if this is even involved?
+			// Better safe than sorry, though.
+			if(projectile.Customizer() is CustomizerProjInfo customizer) return customizer.shaderID;
+			else return 0;
 		}
 
 		public override void HeldItemShader(ref int shaderID, Item item, PlayerDrawInfo drawInfo) {

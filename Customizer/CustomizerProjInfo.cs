@@ -1,3 +1,4 @@
+using Terraria;
 using Terraria.ModLoader;
 
 namespace ItemCustomizer
@@ -8,5 +9,12 @@ namespace ItemCustomizer
 		public int shaderID = -1; //The shader being applied to this projectile
 
 		public override bool InstancePerEntity => true;
+
+		public void UpdateShaderID(Projectile projectile, int shaderID) {
+			if(this.shaderID != shaderID) {
+				this.shaderID = shaderID;
+				CustomizerMod.mod.SendProjShaderPacket(projectile, this);
+			}
+        }
 	}
 }

@@ -137,7 +137,10 @@ namespace ItemCustomizer
 				pak.Write((byte)type);
 				ShaderID.Write(pak, ShaderID.Read(reader));
 				if(type == PacketType.NPC) pak.Write(reader.ReadInt32());
-				else pak.Write(whoAmI);
+				else if(type == PacketType.PROJ) {
+					pak.Write(reader.ReadInt32());
+					pak.Write(reader.ReadByte());
+                } else pak.Write(whoAmI);
 				pak.Send(ignoreClient: whoAmI);
 			} else {
 				ShaderID shader = ShaderID.Read(reader);
@@ -147,6 +150,38 @@ namespace ItemCustomizer
 						break;
 					case PacketType.NPC:
 						Main.npc[reader.ReadInt32()].Customizer().shaderID = shader.ID;
+						break;
+					case PacketType.PROJ:
+						// read in reverse order because why ???
+						// if this works, what the fuck
+						int identity = reader.ReadInt32();
+						byte owner = reader.ReadByte();
+						//int idx = Projectile.GetByUUID(owner, identity);
+						int num84 = 1000;
+						for(int num85 = 0; num85 < 1000; num85++) {
+							if(Main.projectile[num85].owner == owner && Main.projectile[num85].identity == identity && Main.projectile[num85].active) {
+								num84 = num85;
+								break;
+							}
+						}
+
+						if(num84 == 1000) {
+							for(int num86 = 0; num86 < 1000; num86++) {
+								if(!Main.projectile[num86].active) {
+									num84 = num86;
+									break;
+								}
+							}
+						}
+						Main.NewText("Received projectile packet: " + owner + " " + identity + " " + num84 + " " + shader.ID);
+						if(num84 != -1 && num84 != Main.maxProjectiles) {
+							var proj = Main.projectile[num84];
+							//if(proj.Customizer() is CustomizerProjInfo customizer)
+							//customizer.shaderID = shader.ID;
+							proj.Customizer().shaderID = shader.ID;
+						} else {
+							Main.NewText("Invalid projectile identity");
+						}
 						break;
 				}
 			}
@@ -222,10 +257,22 @@ namespace ItemCustomizer
 			}
 		}
 
+		public void SendProjShaderPacket(Projectile projectile, CustomizerProjInfo projInfo) {
+			if(Main.netMode == NetmodeID.MultiplayerClient) {
+				ModPacket pak = GetPacket();
+				pak.Write((byte)PacketType.PROJ);
+				ShaderID.Write(pak, new ShaderID(projInfo.shaderID));
+				pak.Write(projectile.owner);
+				pak.Write(projectile.identity);
+				pak.Send();
+            }
+        }
+
 		public enum PacketType
 		{
 			AMMO,
-			NPC
+			NPC,
+			PROJ
 		}
 	}
 }

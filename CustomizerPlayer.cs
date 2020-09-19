@@ -19,15 +19,15 @@ namespace ItemCustomizer
 
 		public override void PostItemCheck() {
 			NetExclude(NetmodeID.Server, () => {
-				if(player.HeldItem != null && !player.HeldItem.IsAir && (player.HeldItem.Customizer().shaderID.ID > 0 || (CustomizerMod.mod.ammoShaders[player.whoAmI] != null && CustomizerMod.mod.ammoShaders[player.whoAmI].ID > 0))) {
+				if(player.HeldItem != null && !player.HeldItem.IsAir && player.HeldItem.Customizer() is CustomizerItem && (player.HeldItem.Customizer().shaderID.ID > 0 || (CustomizerMod.mod.ammoShaders[player.whoAmI] != null && CustomizerMod.mod.ammoShaders[player.whoAmI].ID > 0))) {
 					foreach(Projectile proj in CustomizerProjectile.newProjectiles) {
 						CustomizerProjInfo shotInfo = proj.Customizer();
 						if(shotInfo.shaderID > 0) continue; //If this SOMEHOW has a shader already, don't bother
 						//Yes, there's a specific thing for the Vortex Beater. It's the only ammo-using weapon I know that displays as a projectile.
 						if(player.HeldItem.useAmmo == AmmoID.None || proj.type == ProjectileID.VortexBeater) {
-							shotInfo.shaderID = player.HeldItem.Customizer().shaderID.ID;
+							shotInfo.UpdateShaderID(proj, player.HeldItem.Customizer().shaderID.ID);
 						} else {
-							shotInfo.shaderID = CustomizerMod.mod.ammoShaders[player.whoAmI].ID;
+							shotInfo.UpdateShaderID(proj, CustomizerMod.mod.ammoShaders[player.whoAmI].ID);
 						}
 					}
 					CustomizerProjectile.newProjectiles = new List<Projectile>();

@@ -29,7 +29,7 @@ namespace ItemCustomizer
 
 				//Apply shader of the player's held item provided it meets all this criteria to make absolute certain a player fired it
 				//As of 1.1.3 this now only applies to OTHER PLAYER's projectiles! Until I can get the better system working with multiplayer, that is.
-				if(projInfo.parent && !(hook || pet || lightPet) && !projectile.npcProj && !projectile.trap && projectile.owner != 255 && projectile.owner != Main.myPlayer && Main.player[projectile.owner].itemAnimation > 0 && ((projectile.friendly || !projectile.hostile) || projectile.minion) && projInfo.shaderID < 0) {
+				/*if(projInfo.parent && !(hook || pet || lightPet) && !projectile.npcProj && !projectile.trap && projectile.owner != 255 && projectile.owner != Main.myPlayer && Main.player[projectile.owner].itemAnimation > 0 && ((projectile.friendly || !projectile.hostile) || projectile.minion) && projInfo.shaderID < 0) {
 					//Main.NewText("Ammo shader for projectile: " + CustomizerMod.mod.ammoShaders[projectile.owner]);
 					var player = Main.player[projectile.owner];
 					if(!player.HeldItem.IsAir) {
@@ -41,7 +41,7 @@ namespace ItemCustomizer
 					}
 				} else if(projInfo.shaderID < 0) {
 					projInfo.shaderID = 0;
-				}
+				}*/
 				
 				childProjectiles = new List<Projectile>();
 				//newDusts = new List<int>();
@@ -74,7 +74,7 @@ namespace ItemCustomizer
 					CustomizerProjInfo childInfo = proj.GetGlobalProjectile<CustomizerProjInfo>();
 
 					var player = Main.player[projectile.owner];
-					childInfo.shaderID = (projectile.type == ProjectileID.VortexBeater && !player.HeldItem.IsAir) ? CustomizerMod.mod.ammoShaders[projectile.owner].ID : info.shaderID;
+					childInfo.UpdateShaderID(projectile, projectile.type == ProjectileID.VortexBeater && !player.HeldItem.IsAir ? CustomizerMod.mod.ammoShaders[projectile.owner].ID : info.shaderID);
 					childInfo.parent = false;
 				}
 
